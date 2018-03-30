@@ -1,0 +1,113 @@
+<!-- EDA文件库列表页  -->
+<div class="page-container-box data-admin-page">
+    <div class="page-container">
+
+        <div class="admin-main-box">
+            <div class="data-tabel-top clearfix" style="margin-bottom: 16px;">
+                <span class="title pull-left">
+                    <a href="/index/eda/list" class="text-info">EDA文件库</a>
+                </span>
+                <div class="ant-input-search pull-right ant-input-affix-wrapper" style="width: 340px;">
+                    <form action="/index/eda/list">
+                        <button type="submit" class="btn ant-btn ant-btn-primary pull-right">
+                               搜索
+                            </button>
+                        <input type="text" placeholder="请输入完整的物资编码" class="ant-input pull-right" name="key">
+                    </form>
+                </div>
+            </div>
+            <div class="ant-table-wrapper">
+                <div class="ant-spin-nested-loading">
+                    <div class="ant-spin-container">
+                        <div class="ant-table ant-table-large ant-table-scroll-position-left">
+                            <div class="ant-table-content">
+                                <div class="ant-table-body">
+                                    <table class="">
+                                        <colgroup>
+                                            <col>
+                                            <col>
+                                            <col>
+                                            <col>
+                                            <col>
+                                            <col>
+                                        </colgroup>
+                                        <thead class="ant-table-thead">
+                                            <tr>
+                                                <th class="">
+                                                    <span><!-- react-text: 612 -->物资编码<!-- /react-text --></span>
+                                                </th>
+                                                <th class="">
+                                                    <span><!-- react-text: 615 -->符号名称<!-- /react-text --></span>
+                                                </th>
+                                                <th class="">
+                                                    <span><!-- react-text: 618 -->原型图符号文件<!-- /react-text --></span>
+                                                </th>
+                                                <th class="">
+                                                    <span><!-- react-text: 621 -->封装库名称<!-- /react-text --></span>
+                                                </th>
+                                                <th class="">
+                                                    <span><!-- react-text: 624 -->封装库文件<!-- /react-text --></span>
+                                                </th>
+                                                <th class="">
+                                                    <span><!-- react-text: 627 -->操作<!-- /react-text --></span>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="ant-table-tbody">
+                                            {volist name="list" id="vo"}
+
+                                            <tr class="ant-table-row  ant-table-row-level-0">
+                                                <td class="">
+
+                                                    {notempty name="$vo['deleted_at']"}
+                                                    <span>
+                                                        {$vo.serial_no}
+                                                    </span>
+                                                    <span class="red">(停用)</span> {else/}
+                                                    <a target="_blank" href="/index/component/detail?sn={$vo.serial_no}">
+                                                        {$vo.serial_no}
+                                                    </a> {/notempty}
+                                                </td>
+                                                <td class="">
+                                                    {$vo.eda_lib_ref|default='无'}
+                                                </td>
+                                                <td class="">
+                                                    {if empty($vo['eda_lib_path'])} 无 {else/}
+                                                    <a href="/eda/{$vo.eda_footprint_path|default='#'}" download="{$vo.eda_footprint_path}" style="color: rgb(59, 123, 220);">{$vo.eda_lib_path|default='无'}
+                                                </a> {/if}
+                                                </td>
+                                                <td class="">
+                                                    {$vo.eda_footprint_ref|default='无'}
+                                                </td>
+                                                <td class="">
+                                                    {if empty($vo['eda_footprint_path'])} 无 {else/}
+                                                    <a href="/eda/{$vo.eda_footprint_path|default='#'}" download="{$vo.eda_footprint_path}" style="color: rgb(59, 123, 220);">{$vo.eda_footprint_path|default='无'}
+                                                </a> {/if}
+                                                </td>
+                                                <td class="">
+                                                    {notempty name="$vo['deleted_at']"}
+                                                    <span class="red">已停用</span> {else/}
+                                                    <p class="tabel-edit">
+                                                        <a href="/index/eda/edit?sn={$vo.serial_no}">
+                                                                编辑
+                                                            </a>
+                                                    </p> {/notempty}
+
+                                                </td>
+                                            </tr>
+                                            {/volist}
+                                        </tbody>
+                                    </table>
+                                    <div class="pagination-box">
+                                        {$list|raw}
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

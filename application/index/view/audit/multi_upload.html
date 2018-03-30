@@ -1,0 +1,65 @@
+<!-- 导入修改日志 -->
+<div class="page-container-box data-admin-page">
+    <div class="page-container">
+
+        <div class="admin-main-box">
+            <div class="data-tabel-top clearfix" style="margin-bottom: 16px;">
+                <span class="title">
+                    <a href="/index/audit/multi_upload" class="text-info">批量上传日志</a>
+                </span>
+            </div>
+            <div class="ant-table-wrapper">
+                <div class="ant-spin-nested-loading">
+                    <div class="ant-spin-container">
+                        <div class="ant-table ant-table-large ant-table-scroll-position-left">
+                            <div class="ant-table-content">
+                                <div class="ant-table-body">
+                                    <table class="">
+                                        <thead class="ant-table-thead">
+                                            <tr>
+                                                <th class="">
+                                                    <span>
+                                                    <!-- react-text: 9730 -->修改人<!-- /react-text -->
+                                                </span>
+                                                </th>
+                                                <th class="">
+                                                    <span><!-- react-text: 9733 -->导入的文件<!-- /react-text -->
+                                                </span>
+                                                </th>
+                                                <th class="">
+                                                    <span><!-- react-text: 9736 -->修改时间<!-- /react-text -->
+                                                </span>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="ant-table-tbody">
+                                            {volist name='list' id='vo'}
+                                            <tr class="ant-table-row  ant-table-row-level-0">
+                                                <td class="">
+                                                    <span class="ant-table-row-indent indent-level-0" style="padding-left: 0px;"></span> {$vo.user.username|default='无'}
+                                                </td>
+                                                <td class="">
+                                                    <a href="/{$vo.file_path}">
+
+                                                    {$vo.file_name|default="无"}
+                                                </a>
+                                                </td>
+                                                <td class="">
+                                                    {$vo.created_at}
+                                                </td>
+                                            </tr>
+                                            {/volist}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pagination-box">
+                            {$list|raw}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

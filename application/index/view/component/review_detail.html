@@ -1,0 +1,304 @@
+<!-- 元器件数据修改审核详情页 -->
+<input type="hidden" value="{$review.id}" name="review_id">
+<div class="component-detail-box  component-edit-page">
+    <div class="classify-page">
+        <div class="component-detail-breadcrumbs">
+            <span class="component-detail-breadcrumbs-item">
+                                <a href="/index/component/review_list">元器件修改审核 </a>
+                            </span>
+
+            <i class="iconfont">&gt;</i>
+            <span class="component-detail-breadcrumbs-item">
+                                {$component.specification_model_no|default='--'}
+                            </span>
+        </div>
+        <div>
+            <input type="hidden" name="pid" value="{$component.pid}">
+            <div class="component-detail-tabs">
+                <div>
+                    <div>
+                        <table class="review-table">
+                            <thead>
+                                <tr>
+                                    <th><span>&nbsp;</span></th>
+                                    <th>
+                                        <span>原数据</span>
+                                    </th>
+                                    <th>
+                                        <span>修改为</span>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody class="review-tbody" style="height: inherit;">
+                                <tr>
+                                    <td>产品图片</td>
+                                    <td>
+                                        {empty name="component.files.4"}
+                                        <img src="/static/assets/img/no_photo.png" alt=""> {else/}
+                                        <img class="component-img" src="/{$component.files.4.path}" alt="{$component.files.4.name}"> {/empty}
+                                    </td>
+                                    <td>
+                                        {empty name="review.files.4"} {empty name="component.files.4"}
+                                        <img src="/static/assets/img/no_photo.png" alt=""> {else/}
+                                        <img class="component-img" src="/{$component.files.4.path}" alt="{$component.files.4.name}"> {/empty} {else/}
+                                        <img class="component-img" src="/{$review.files.4.path}" alt="{$review.files.4.name}"> {/empty}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>物资编码</td>
+                                    <td>{$component.serial_no|default='--'}</td>
+                                    <td>{$review.serial_no|default='--'}</td>
+                                </tr>
+                                <tr>
+                                    <td>型号规格</td>
+                                    <td>{$component.specification_model_no|default='--'}</td>
+                                    <td>{$review.specification_model_no|default='--'}</td>
+                                </tr>
+                                <tr>
+                                    <td>生产厂家</td>
+                                    <td>{$component.manufacturer.name|default='--'}</td>
+                                    <td>{$review.manufacturer.name|default='--'}</td>
+                                </tr>
+                                <tr>
+                                    <td>国产/进口</td>
+                                    <td>{$component.origin|default='--'}</td>
+                                    <td>{$review.origin|default='--'}</td>
+                                </tr>
+                                <tr>
+                                    <td>供货状态</td>
+                                    <td>
+                                        {if $component['supply_status']==1} 可用 {else/} 优选 {/if}
+
+                                    </td>
+                                    <td>
+                                        {if $review['supply_status']==1} 可用 {else/} 优选 {/if}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>生产控制质量等级</td>
+                                    <td>{$component.quality|default='--'}</td>
+                                    <td>{$review.quality|default='--'}</td>
+                                </tr>
+                                <tr>
+                                    <td>可靠性预计质量等级</td>
+                                    <td>{$component.reliability_quality|default='--'}</td>
+                                    <td>{$review.reliability_quality|default='--'}</td>
+                                </tr>
+                                <tr>
+                                    <td>封装形式</td>
+                                    <td>{$component.package|default='--'}</td>
+                                    <td>{$review.package|default='--'}</td>
+                                </tr>
+                                <tr>
+                                    <td>名称</td>
+                                    <td>{$component.name|default='--'}</td>
+                                    <td>{$review.name|default='--'}</td>
+                                </tr>
+                                <tr>
+                                    <td>温度范围</td>
+                                    <td>
+                                        {$component.temperature_low}℃ ~ {$component.temperature_high}℃
+                                    </td>
+                                    <td>{$review.temperature_low}℃ ~ {$review.temperature_high}℃</td>
+                                </tr>
+                                {volist name="$component['params']" id="vo"}
+                                <tr>
+                                    <td>{$vo.name|default='--'}</td>
+                                    <td>{$vo.param_value|default='--'}</td>
+                                    <td>
+                                        {if empty($review['params'][$key])} {$vo.param_value} {else/} {$review['params'][$key]['param_value']} {/if}
+                                    </td>
+                                </tr>
+                                {/volist}
+                                <tr>
+                                    <td>数据手册</td>
+                                    <td>
+                                        <p class="pdfview-box">
+                                            {empty name="component.files.1"} 无 {else/}
+                                            <a href="/{$component.files.1.path}" target="_blank">预览</a> {/empty}
+                                        </p>
+                                    </td>
+                                    <td>
+                                        <p class="pdfview-box">
+                                            {empty name="review.files.1"} {empty name="component.files.1"} 无 {else/}
+                                            <a href="/{$component.files.1.path}" target="_blank">预览</a> {/empty} {else/}
+                                            <a href="/{$review.files.1.path}" target="_blank">预览</a> {/empty}
+                                        </p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>执行标准</td>
+                                    <td>
+                                        <p class="pdfview-box">
+                                            {empty name="component.files.6"} 无 {else/}
+                                            <a href="/{$component.files.6.path}" target="_blank">预览</a> {/empty}
+                                        </p>
+                                    </td>
+                                    <td>
+                                        <p class="pdfview-box">
+                                            {empty name="review.files.6"} {empty name="component.files.6"} 无 {else/}
+                                            <a href="/{$component.files.6.path}" target="_blank">预览</a> {/empty} {else/}
+                                            <a href="/{$review.files.6.path}" target="_blank">预览</a> {/empty}
+                                        </p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>外形尺寸图</td>
+                                    <td>
+                                        <p class="pdfview-box">
+                                            {empty name="component.files.7"} 无 {else/}
+                                            <a href="/{$component.files.7.path}" target="_blank">预览</a> {/empty}
+                                        </p>
+                                    </td>
+                                    <td>
+                                        <p class="pdfview-box">
+                                            {empty name="review.files.7"} {empty name="component.files.7"} 无 {else/}
+                                            <a href="/{$component.files.7.path}" target="_blank">预览</a> {/empty} {else/}
+                                            <a href="/{$review.files.7.path}" target="_blank">预览</a> {/empty}
+                                        </p>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="edit-btn-box" style="text-align: center; margin: 10px 0px;">
+                <button type="button" class="ant-btn ant-btn-primary btn-pass" style="width: 130px; height: 40px; margin-right: 30px; background-color: rgb(59, 123, 220);">
+                    <span>审核通过</span>
+                </button>
+                <button type="button" class="ant-btn ant-btn-primary btn-no-pass" style="width: 130px; height: 40px; margin-right: 10px; background-color: rgb(248, 248, 248); color: rgb(59, 123, 220);">
+                    <span>审核不通过</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3>确定审核通过？
+        </h3>
+    </div>
+    <div class="modal-body">
+        <p>确定审核后，将覆盖原数据，是否确定审核通过</p>
+    </div>
+    <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+        <button class="btn btn-primary submit-pass">确定</button>
+    </div>
+</div>
+<!-- Modal -->
+<div id="noPassModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3>请输入不通过原因
+        </h3>
+    </div>
+    <div class="modal-body">
+        <div class="form-box text-center">
+            <textarea name="remark" id="remark" rows="3" placeholder="请输入审核不通过原因"></textarea>
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+        <button class="btn btn-primary submit-no-pass">确定</button>
+    </div>
+</div>
+
+
+<script>
+    $(function() {
+        var reviewDetailPage = {
+            init: function() {
+                this.noPassClick();
+                this.passClick();
+                this.showLight();
+                this.submitPass();
+                this.submitNoPass();
+            },
+            // 高亮显示不同
+            showLight: function() {
+                var $tr = $(".review-tbody  tr");
+                for (var i = 0; i < $tr.length; i++) {
+                    var thisTr = $($tr[i]);
+                    var $td1 = $(thisTr.find("td")[1]).html().trim();
+                    var $td2 = $(thisTr.find("td")[2]).html().trim();
+                    if ($td1 != $td2) {
+                        thisTr.addClass("active");
+                    }
+                }
+
+            },
+            // 不通过点击事件
+            noPassClick: function() {
+                $(".btn-no-pass").click(function() {
+                    $("#noPassModal").modal("show");
+                    //  console.log(name);
+                });
+            },
+            // 通过按钮点击事件
+            passClick: function() {
+                var that = this;
+                $(".btn-pass").click(function() {
+                    //  console.log("审核通过");
+
+                    $("#myModal").modal("show");
+                })
+            },
+            // 通过确定点击事件
+            submitPass: function() {
+                var that = this;
+                $(".submit-pass").click(function() {
+
+                    that.ajaxReq("通过")
+                })
+            },
+            submitNoPass: function() {
+                var that = this;
+                $(".submit-no-pass").click(function() {
+                    var msg = $("#remark").val()
+                    that.ajaxReq("不通过", msg)
+                })
+            },
+            ajaxReq: function(status, remark) {
+                layer.load();
+                var params = {};
+                var id = $("input[name=review_id]").val();
+                params.id = id;
+                params.status = status;
+                if (remark) {
+                    params.remark = remark;
+                }
+                // console.log(params);
+                $.ajax({
+                    url: '/index/component/reviewAction',
+                    type: 'POST',
+                    dataType: 'json',
+                    data: params,
+                    success: function(res, textStatus, xhr) {
+                        layer.closeAll('loading');
+                        //  console.log(res);
+                        if (res.status != 1) {
+                            layer.msg(res.data);
+                            return false;
+                        }
+                        layer.msg("提交成功");
+                        setTimeout(function() {
+                            window.history.go(-1)
+                        }, 500)
+
+                    },
+                    error: function(xhr, textStatus, errorThrown) {
+                        //  console.log("error");
+                        layer.closeAll('loading');
+                        layer.msg("服务端错误")
+                    }
+                });
+            }
+        };
+        reviewDetailPage.init();
+    })
+</script>

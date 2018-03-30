@@ -1,0 +1,178 @@
+<style>
+    .importPage {
+        margin: 0 20px;
+    }
+    
+    form {
+        margin: 20px 0;
+        border: 1px dashed #999;
+        width: 300px;
+        padding: 20px;
+    }
+    
+    form .text-info {
+        padding-bottom: 10px;
+    }
+</style>
+<div class="page-container-box">
+    <div class="page-container">
+        <div class="admin-main-box">
+            <div class="data-tabel-top clearfix" style="margin-bottom: 16px;">
+                <span class="title">
+                    <a href="/index/component/import" class="text-info">导入数据</a>
+                </span>
+            </div>
+
+            <div class="row importPage" style="padding:10px 20px">
+                <div>
+
+                    <div>
+                        <a href="/uploadTemplate.csv">
+                            <span class="ant-btn ant-btn-primary" style="line-height:26px;">模板下载</span>
+                            <span><b>uploadTemplate.csv</b></span>
+                        </a>
+                    </div>
+                    <h5 class="orange">
+                        (您可以通过上传文件来实现批量添加或修改元器件。请按照给出的模板格式来上传文件。)
+                    </h5>
+                    <div class="row clearfix">
+                        <!-- <iframe name="demoIframe" style="display:none"></iframe> -->
+                        <form action="/index/component/importShow" class="pull-left" method="post" id="editForm" enctype="multipart/form-data">
+                            <p class="text-info">批量修改</p>
+                            <div class="upload-file-box ">
+                                <div class="postion-file">
+                                    <input class="filename" type="file" name="file">
+                                </div>
+                                <!--     <button type="button" class="btn btn-info choose-file">选择文件</button>
+                                <span class="file-name-text">未选择文件</span>-->
+                            </div>
+
+                            <!-- <input type="hidden" name="type" value=""> -->
+                            <div class="upload-submit-box">
+                                <input id="editButton" class="ant-btn ant-btn-primary submit-btn" type="submit" value="上传修改">
+                            </div>
+
+                        </form>
+                        <form action="/index/component/importAddShow" class="pull-left" method="post" id="addForm" enctype="multipart/form-data">
+                            <p class="text-info">批量新增</p>
+                            <div class="upload-file-box ">
+                                <div class="postion-file">
+                                    <input class="filename" type="file" name="file">
+                                </div>
+                                <!--                       <button type="button" class="btn btn-info choose-file">选择文件</button>
+                                <span class="file-name-text">未选择文件</span>-->
+                            </div>
+                            <!-- <input type="hidden" name="type" value=""> -->
+                            <div class="upload-submit-box">
+                                <input id="addButton" class="ant-btn ant-btn-primary submit-btn" type="submit" value="上传新增">
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+                <div>
+                    <h4>
+                        说明：
+                    </h4>
+                    <ul class="">
+                        <li>
+                            <b>
+                                1 上传的文件需要为
+                                <span class="orange">.csv</span>
+                                格式。
+                            </b>
+                        </li>
+                        <li>
+                            <b>
+                                2 上传过程中
+                                <span class="orange">不要刷新或关闭页面</span>
+                                。
+                            </b>
+                        </li>
+                        <li>
+                            <b>
+                                3 批量修改当前只会修改
+                                <span class="orange"> 供货状态</span>
+                                ，其他字段为保护字段。
+                            </b>
+                        </li>
+                        <li>
+                            <b>
+                                4 建议批量上传的条数
+                                <span class="orange"> 小于1000条</span>
+                                。
+                            </b>
+                        </li>
+
+                        <li>
+                            <b>
+                                5 批量添加，
+                                <span class="orange">厂商和分类必填</span>
+                                ，且必须已存在，否则添加将失败。
+                            </b>
+                        </li>
+                        <li>
+                            <b>
+                                6 批量添加，物资编码为
+                                <span class="orange">10位字符，WG或WP开头</span>
+                                。
+                            </b>
+                        </li>
+                        <li>
+                            <b>
+                                7 停用的元器件
+                                <span class="orange">不会被更新，也不会被重复添加！</span>
+                                。
+                            </b>
+                        </li>
+                    </ul>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    /*    $(".importPage .submit-btn").click(function () {
+                                $(this).parents(".importPage form").submit()
+                            });*/
+
+    $("#addButton").click(function(event) {
+        event.preventDefault();
+        $("#addForm").submit();
+    });
+    $("#editButton").click(function(event) {
+        event.preventDefault();
+        $("#editForm").submit();
+    });
+    /*    $(".choose-file").click(function (event) {
+            event.preventDefault();
+            $(this).parents(".upload-file-box").find(".filename").click();
+        });
+        $(".upload-file-box .filename").change(function (e) {
+            e.preventDefault();
+
+            $(this).parents(".upload-file-box").find(".file-name-text").text(this.value);
+        })*/
+    /*    $("form").submit(function (res) {
+                console.log(res);
+                layer.load();
+            })
+            $('iframe').on('load', function () {
+                var responseText = $('iframe')[0].contentDocument.body.textContent;
+                try {
+                    var responseData = JSON.parse(responseText) || {};
+                } catch (error) {
+                    var responseData = eval(responseText) || {};
+                }
+
+                layer.closeAll('loading');
+                console.log(responseData);
+                if (responseData.status != 1) {
+                    layer.msg(responseData.data)
+                    return false;
+                }
+                layer.msg("上传成功")
+            });*/
+</script>

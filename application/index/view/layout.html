@@ -1,0 +1,47 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{$title|default='元器件数据管理'}</title>
+    <link rel="stylesheet" href="/static/assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/static/assets/css/reset.css" />
+    <link rel="stylesheet" href="/static/assets/css/common.css" />
+    <link rel="stylesheet" href="/static/assets/css/main.css" />
+    <script src="/static/assets/js/jquery-1.9.1.min.js"></script>
+    <script>
+        String.prototype.trim = function() {
+            return this.replace(/(^\s*)|(\s*$)/g, "");
+        }
+        String.prototype.ltrim = function() {
+            return this.replace(/(^\s*)/g, "");
+        }
+        String.prototype.rtrim = function() {
+            return this.replace(/(\s*$)/g, "");
+        }
+    </script>
+</head>
+
+<body>
+    <noscript>You need to enable JavaScript to run this app. 请允许您的浏览器加载 JavaScript</noscript> {include file="layout/header"/}
+    <!-- 左导航 -->
+    {include file="layout/nav"/}
+    <div class="container-fluid" style="padding-top:56px;">
+
+
+        <!-- 右内容 -->
+        {__CONTENT__}
+        <!-- footer -->
+        {include file="layout/footer"/}
+
+    </div>
+
+    <script src="/static/assets/js/bootstrap.min.js"></script>
+    <script src="/static/assets/js/layer/layer.js"></script>
+    <!-- <script src="/static/assets/js/ajaxFileUpload.js"></script> -->
+    <script src="/static/assets/js/common.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,331 @@
+<!-- 元器件详情页 -->
+<div class="classify-page componet-detail-page">
+    <div>
+        <div class="component-detail-breadcrumbs">
+            <span class="component-detail-breadcrumbs-item">
+                <a href="/index/navigation">分类导航 </a>
+            </span>
+            <i class="iconfont">&gt;</i>
+            <span class="component-detail-breadcrumbs-item">
+                <a href="/index/navigation/index?id={$category.parent.id}">
+                    {$category.parent.name}
+                </a></span>
+            <i class="iconfont">&gt;</i>
+            <span class="component-detail-breadcrumbs-item">
+                <a href="/index/navigation/list?category_id={$category.id}">
+                    {$category.name}
+                </a>
+            </span>
+            <i class="iconfont">&gt;</i>
+            <span class="component-detail-breadcrumbs-item">
+                {$data.specification_model_no|default='--'}
+            </span>
+        </div>
+        <div class="component-detail-item clearfix" data-pid="7355892">
+            <div class="c-i-left pull-left">
+                <div class="img-box">
+                    {if empty($data['files'][4])}
+                    <img src="/static/assets/img/no_photo.png" alt=""> {else/}
+                    <img src="/{$data['files'][4]['path']|default=''}" alt="{$data.name}"> {/if}
+                </div>
+            </div>
+            <div class="c-i-right pull-left main-info-block">
+                <div class="product-info">
+                    <h2 class="name">
+                        {$data.specification_model_no|default='--'}
+                    </h2>
+                    <p class="info-list clearfix">
+                        <i class="item-title pull-left">生产厂家：</i>
+                        <span class="item-info pull-left">{$data.manufacturer.name|default='--'}</span>
+                    </p>
+                    <p class="info-list clearfix">
+                        <i class="item-title pull-left">生产控制质量等级：</i>
+                        <span class="item-info pull-left">{$data.quality|default='--'}</span>
+                    </p>
+                    <p class="info-list clearfix">
+                        <i class="item-title pull-left">封装形式：</i>
+                        <span class="item-info pull-left">{$data.package|default='--'}</span>
+                    </p>
+                    <p class="info-list clearfix">
+                        <i class="item-title pull-left">名称：</i>
+                        <span class="item- pull-left">{$data.name|default='--'}</span>
+                    </p>
+                </div>
+                <div class="product-order header-product-order">
+                    {eq name="role" value="admin"}
+                    <a class="ant-btn ant-btn-primary" href="/index/component/edit?sn={$data.serial_no}">
+                        修改数据
+                    </a> {else/} {empty name="data.component_review"}
+                    <a class="ant-btn ant-btn-primary" href="/index/component/edit?sn={$data.serial_no}">
+                        申请修改数据
+                    </a> {else/}
+                    <a class="ant-btn ant-btn-primary disabled">
+                        审核中
+                    </a> {/empty} {/eq} {eq name="role" value="admin"}
+                    <a class="ant-btn ant-btn-default" href="/index/eda/edit?sn={$data.serial_no}">
+                        修改EDA文件
+                    </a> {else/} {empty name="data.eda_review"}
+                    <a class="ant-btn ant-btn-default" href="/index/eda/edit?sn={$data.serial_no}">
+                        申请修改EDA文件
+                    </a> {else/}
+                    <a class="ant-btn ant-btn-primary disabled">
+                        审核中
+                    </a> {/empty} {/eq}
+
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="component-detail-tabs">
+            <div>
+                <div class="cont-nav-tabs">
+                    <ul class="detail-tab clearfix">
+                        <li class="tab-list pull-left active" data-index="0">规格参数</li>
+                        <li class="tab-list pull-left" data-index="1">数据手册</li>
+                        <li class="tab-list pull-left" data-index="2">执行标准</li>
+                        <li class="tab-list pull-left" data-index="3">外形尺寸图</li>
+                        <li class="tab-list pull-left" data-index="4">EDA文件</li>
+                    </ul>
+                </div>
+                <div style="overflow-x: hidden;">
+                    <div class="react-swipeable-view-container">
+                        <div class="slide">
+                            <div class="slide-item">
+                                <table class="detail-table">
+                                    <tbody style="height: inherit;">
+                                    <tr>
+                                        <td class="td-left">物资编码</td>
+                                        <td class="td-right">{$data.serial_no}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="td-left">生产厂家</td>
+                                        <td class="td-right">{$data.manufacturer.name|default='--'}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="td-left">国产/进口</td>
+
+                                        <td class="td-right">{$data.origin|default='--'}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="td-left">供货状态</td>
+                                        <td class="td-right">
+                                            {switch name="data.supply_status"} {case 1}可用{/case} {case 2}优选{/case} {case
+                                            3}推荐{/case} {case 4}限用{/case} {/switch}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="td-left">生产控制质量等级</td>
+                                        <td class="td-right">{$data.quality|default='--'}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="td-left">可靠性预计质量等级</td>
+                                        <td class="td-right">{$data.reliability_quality|default='--'}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="td-left">封装形式</td>
+                                        <td class="td-right">{$data.package|default='--'}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="td-left">名称</td>
+                                        <td class="td-right">{$data.name}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="td-left">温度范围</td>
+                                        <td class="td-right">{$data.temperature_low|default='--'}℃ ~
+                                                             {$data.temperature_high|default='--'}℃
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="td-left">规范号</td>
+                                        <td class="td-right">{$data.norm_no|default='--'}</td>
+                                    </tr>
+
+                                    {volist name="data.params" id="vo"}
+                                    <tr>
+                                        <td class="td-left">
+                                            {$vo.name}
+                                        </td>
+                                        <td class="td-right">
+                                            {$vo.param_value}
+                                        </td>
+                                    </tr>
+                                    {/volist}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="slide hide">
+
+                            <!-- datasheet -->
+                            <div class="slide-item">
+
+                                <!--TODO: 路径整理 路径写进iframe-box 自定义属性 data-url里面 js判断浏览器类型 -->
+                                {if empty($data['files'][1])}
+                                <div class="slide-item">
+                                    <p style="text-align: center; line-height: 100px; font-size: 30px;">暂无数据手册</p>
+                                </div>
+                                {else/}
+                                <div class="iframe-box" data-url="/{$data.files.1.path}">
+                                    <iframe src="" frameBorder="none" width="100%" height="490px"
+                                            title="datasheet"></iframe>
+                                </div>
+                                {/if}
+
+                            </div>
+
+                        </div>
+                        <div class="slide hide">
+                            {if empty($data['files'][6])}
+                            <!-- 无执行标准 -->
+                            <div class="slide-item">
+                                <p style="text-align: center; line-height: 100px; font-size: 30px;">暂无执行标准</p>
+                            </div>
+                            {else/}
+                            <!--执行标准  -->
+                            <div class="slide-item">
+                                <div class="iframe-box" data-url="/{$data.files.6.path|default=''}">
+                                    <iframe src="" frameborder="0" width="100%" height="490px" title=""></iframe>
+                                </div>
+                            </div>
+                            {/if}
+
+
+                        </div>
+                        <div class="slide hide">
+                            {if empty($data['files'][7])}
+                            <!-- 无外形尺寸图 -->
+                            <div class="slide-item">
+                                <p style="text-align: center; line-height: 100px; font-size: 30px;">
+                                    暂无外形尺寸图
+                                </p>
+                            </div>
+                            {else/}
+                            <!--外形尺寸图  -->
+                            <div class="slide-item">
+                                <div class="iframe-box" data-url="/{$data.files.7.path|default=''}">
+                                    <iframe src="" frameborder="0" width="100%" height="490px" title=""></iframe>
+                                </div>
+                            </div>
+
+                            {/if}
+                        </div>
+                        <div class="slide hide">
+                            <div class="slide-item">
+                                <!-- EDA文件 start -->
+                                <table class="detail-table">
+                                    <tbody style="height: inherit;">
+                                    <tr>
+                                        <td class="td-left">符号名称</td>
+                                        <td class="td-right">
+                                            {$data.eda_lib_ref|default = "无"}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="td-left">原型图符号文件</td>
+                                        <td class="td-right">
+                                            {empty name="data.eda_lib_path"}
+                                            无
+                                            {else/}
+                                            <a href="/eda/{$data.eda_lib_path}" download="DISCRETE.SchLib">
+                                                {$data.eda_lib_path}
+                                            </a>
+                                            {/empty}
+
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="td-left">封装名称</td>
+                                        <td class="td-right">{$data.eda_footprint_ref|default = "无"}</td>
+                                    </tr>
+                                    <tr style="height: 48px;">
+                                        <td class="td-left">封装库文件</td>
+                                        <td class="td-right">
+                                            {empty name="data.eda_footprint_path"}
+                                            无
+                                            {else/}
+                                            <a href="/eda/{$data.eda_footprint_path}" download="OTHERS_THRU.PcbLib">
+                                                {$data.eda_footprint_path}
+                                            </a>
+                                            {/empty}
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                <!-- EDA文件 over -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    var detailPage = {
+        init: function () {
+            this.tabClick();
+            this.datasheetIframe();
+        },
+        tabClick: function () {
+            $(".detail-tab .tab-list").click(function () {
+                $(this).addClass("active").siblings("li").removeClass("active");
+                var index = $(this).attr("data-index");
+                $($(".slide")[index]).slideDown(300).siblings(".slide").slideUp(300);
+            })
+        },
+        myBrowser: function () {
+            var userAgent = navigator.userAgent; //取得浏览器的userAgent字符串
+            var isOpera = userAgent.indexOf("Opera") > -1;
+            if (isOpera) {
+                return -1
+            }
+            ; //判断是否Opera浏览器
+            if (userAgent.indexOf("Firefox") > -1) {
+                return -1;
+            } //判断是否Firefox浏览器
+            if (userAgent.indexOf("Chrome") > -1) {
+                return -1;
+            }
+            if (userAgent.indexOf("Safari") > -1) {
+                return -1;
+            } //判断是否Safari浏览器
+            var isIE = userAgent.indexOf("compatible") > -1 && userAgent.indexOf("MSIE") > -1 && !isOpera;
+            if (isIE) {
+                var reIE = new RegExp("MSIE (\\d+\\.\\d+);");
+                reIE.test(userAgent);
+                var fIEVersion = parseFloat(RegExp["$1"]);
+                if (fIEVersion < 9) {
+                    return 0;
+                } else if (fIEVersion >= 9) {
+                    return 1;
+                } else {
+                    return 0
+                } //IE版本过低  
+            }
+            // ie11 is what are you doing...
+            return 1;
+            //判断是否IE浏览器
+        },
+        // 判断浏览器类型
+        datasheetIframe: function () {
+            var browser = this.myBrowser();
+            var $iframeBox = $(".iframe-box");
+            for (var i = 0; i < $iframeBox.length; i++) {
+                var url = $($iframeBox[i]).attr("data-url");
+                url = browser == 1 ? ("/static/pdf_js/web/viewer.html?file=") + url : url;
+                if (browser == 0) {
+                    var html = '<h5 class="text-center">您的浏览器不支持在线查看PDF文件,可以 <a href="' + url + '" download target="_blank">下载</a>后查看文件，或用其它浏览器访问。</h5>'
+                    $($iframeBox[i]).html(html);
+                } else {
+                    $($iframeBox[i]).find("iframe").attr("src", url);
+                }
+            }
+        }
+
+    };
+    $(function () {
+        detailPage.init();
+    })
+</script>

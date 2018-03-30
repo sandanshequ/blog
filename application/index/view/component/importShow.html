@@ -1,0 +1,191 @@
+<style>
+    .ant-table-body .error {
+        color: red;
+        color: red!important;
+    }
+</style>
+<div class="page-container-box">
+    <div class="page-container">
+        <div class="admin-main-box">
+            <div class="data-tabel-top clearfix" style="margin-bottom: 16px;">
+                <span class="title">
+                        <a href="/index/component/import" class="text-info">导入数据</a>
+                    </span>
+                <p>数据修改结果：<span class="success-match" data-count="{:count($list)}">0</span>/{:count($list)} </p>
+            </div>
+            <div class="ant-table-wrapper">
+                <div class="ant-spin-nested-loading">
+                    <div class="ant-spin-container">
+                        <div class="ant-table ant-table-large ant-table-scroll-position-left">
+                            <div class="ant-table-content">
+                                <div class="ant-table-body">
+                                    <table class="">
+
+                                        <thead class="ant-table-thead">
+                                            <tr>
+                                                <th class="" width="120">
+                                                    <span> 物资编码</span>
+                                                </th>
+                                                <th class="">
+                                                    <span>名称</span>
+                                                </th>
+                                                <th class="">
+                                                    <span>规格型号</span>
+                                                </th>
+                                                <th class="">
+                                                    <span> 质量等级</span>
+                                                </th>
+                                                <th class="">
+                                                    <span> 可靠性预计质量等级</span>
+                                                </th>
+                                                <th class="">
+                                                    <span>国产/进口</span>
+                                                </th>
+                                                <th class="">
+                                                    <span> 封装形式</span>
+                                                </th>
+
+
+                                                <th class="">
+                                                    <span>供货状态</span>
+                                                </th>
+                                                <th class="">
+                                                    <span>温度范围</span>
+                                                </th>
+
+                                                <th class="" width="80">
+                                                    <span> 数据修改结果</span>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="ant-table-tbody">
+                                            {volist name='list' id='vo'}
+                                            <tr class="ant-table-row  ant-table-row-level-0" data-serial_no="{$vo.serial_no}" data-supply_status="{$vo.supply_status}">
+                                                <td class="">
+                                                    <span>{$vo.serial_no}</span>
+                                                </td>
+                                                <td class="">
+                                                    <span>{$vo.name}</span>
+                                                </td>
+                                                <td class="">
+                                                    <span> {$vo.specification_model_no}</span>
+                                                </td>
+                                                <td class="">
+                                                    <span> {$vo.quality}</span>
+                                                </td>
+                                                <td class="">
+                                                    <span> {$vo.reliability_quality}</span>
+                                                </td>
+                                                <td class="">
+                                                    <span> {$vo.origin}</span>
+                                                </td>
+                                                <td class="">
+                                                    <span>{$vo.package}</span>
+                                                </td>
+
+
+                                                <td class="">
+                                                    <span> {$vo.supply_status}</span>
+                                                </td>
+                                                <td class="">
+                                                    <span> {$vo.temperature}</span>
+                                                </td>
+
+                                                <td class="">
+                                                    <span class="match-result">
+                                                        <img src="/static/assets/js/layer/theme/default/loading-1.gif" alt="">
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                            {/volist}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    var importShowPage = {
+        successNub: 0,
+        componentLenth: 0,
+        matchLength: 0,
+        init: function() {
+            this.componentLenth = $(".success-match").attr("data-count");
+            $tr = $(".ant-table-tbody tr");
+            for (var i = 0, l = $tr.length; i < l; i++) {
+                var serial_no = $($tr[i]).attr("data-serial_no");
+                var supply_status = $($tr[i]).attr("data-supply_status");
+                this.matchComponent(i, {
+                    serial_no: serial_no,
+                    supply_status: supply_status
+                })
+            }
+            if ($tr.length >= 1) {
+                layer.open({
+                    type: 1,
+                    title: false,
+                    closeBtn: 0,
+                    shadeClose: true,
+                    skin: 'yourclass',
+                    content: '<h4 class="text-center">数据修改进度：<span class="match-modal text-success">0</span>/<span class="match-total"></span></h4>'
+                });
+            }
+            $(".match-total").text(this.componentLenth);
+        },
+        matchComponent: function(nub, params) {
+            var that = this;
+            $tr = $(".ant-table-tbody tr");
+            $.ajax({
+                url: "/index/component/importOneComponentAction",
+                type: 'POST',
+                dataType: 'json',
+                // 当前修改用户id及 用户组id数组
+                data: params,
+                async: true,
+                complete: function(xhr, textStatus) {
+                    //called when complete
+                },
+                success: function(res, textStatus, xhr) {
+                    that.matchLength++;
+                    if (res.status != 1) {
+                        if (that.matchLength == that.componentLenth) {
+                            layer.closeAll();
+                            layer.msg("批量修改结束，批量修改成功" + that.successNub + "条");
+                        }
+                        $($tr[nub]).addClass("error").find(".match-result").html(res.data);
+                        return false;
+                    }
+                    $($tr[nub]).find(".match-result").html("修改成功")
+                    that.successNub++;
+                    if (that.matchLength == that.componentLenth) {
+                        layer.closeAll();
+                        layer.msg("批量修改结束，批量修改成功" + that.successNub + "条");
+                    }
+                    $(".match-modal").text(that.matchLength)
+                    $(".success-match").text(that.successNub);
+                },
+                error: function(xhr, textStatus, errorThrown) {
+                    that.matchLength++;
+                    if (that.matchLength == that.componentLenth) {
+                        layer.closeAll();
+                        layer.msg("批量修改结束，批量修改成功" + that.successNub + "条");
+                    }
+                    $(".match-modal").text(that.matchLength)
+                    $($tr[nub]).addClass("error").find(".match-result").html("修改失败");
+                    // layer.closeAll('loading');
+                    // layer.msg("服务端错误")
+                }
+            });
+        }
+    };
+    $(function() {
+        importShowPage.init();
+    })
+</script>

@@ -1,0 +1,194 @@
+<div>
+    <div class="classify-page">
+        <div class="component-detail-breadcrumbs">
+            <span class="component-detail-breadcrumbs-item">
+                <a href="/index/user/list">用户管理 </a>
+            </span>
+
+            <i class="iconfont">&gt;</i>
+            <span class="component-detail-breadcrumbs-item">
+                添加用户
+            </span>
+        </div>
+        <div style="width: 70%;">
+            <div style="margin: 10px 0px; display: inline-block; width: 100%; line-height: 40px;">
+                <label for="" style="width:60px;display:inline-block"> 用户名：</label>
+                <input type="text" name="usr" value="" class="ant-input">
+                <span style="color: red;"></span>
+            </div>
+            <div style="margin: 10px 0px; display: inline-block; width: 100%; line-height: 40px;">
+                <label for="" style="width:60px;display:inline-block;"> 密码:</label>
+                <input type="password" name="pwd" value="" class="ant-input">
+                <span style="color: red;">（密码格式为大于等于8位字符）</span>
+            </div>
+            </span>
+        </div>
+        <div class="info">
+            <p>选择角色</p>
+        </div>
+        <div>
+            <div class="ant-table-wrapper">
+                <div class="ant-spin-nested-loading">
+                    <div class="ant-spin-container">
+                        <div class="ant-table ant-table-large ant-table-bordered ant-table-scroll-position-left">
+                            <div class="ant-table-content">
+                                <div class="ant-table-body">
+                                    <table class="">
+                                        <thead class="ant-table-thead">
+                                        <tr>
+                                            <th class="ant-table-selection-column">
+                                                <input type="checkbox" class="ciss-checkbox checkedAll" value="on">
+                                            </th>
+                                            <th class="">
+                                                <span>角色名称</span>
+                                            </th>
+                                            <th class="">
+                                                <span>备注</span>
+                                            </th>
+                                        </tr>
+                                        </thead>
+                                        <tbody class="ant-table-tbody">
+
+                                        {volist name="groups" id="vo"}
+
+                                        <tr class="ant-table-row  ant-table-row-level-0">
+                                            <td class="ant-table-selection-column">
+                                                {if($vo.id == 7)}
+                                                <input type="checkbox" class="ciss-checkbox" name="roles"
+                                                       value="{$vo.id}" checked disabled="disabled">
+                                                {else/}
+
+                                                <input type="checkbox" class="ciss-checkbox" name="roles"
+                                                       value="{$vo.id}">
+
+                                                {/if}
+                                            </td>
+                                            <td class="">
+                                                <span class="ant-table-row-indent indent-level-0"
+                                                      style="padding-left: 0px;"></span>
+                                                {$vo.name}
+                                            </td>
+                                            <td class="">
+                                                {$vo.description}
+                                            </td>
+                                        </tr>
+                                        {/volist}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button type="button" class="submit-btn ant-btn changeBtn ant-btn-primary">
+            <span>确认添加</span>
+        </button>
+    </div>
+</div>
+<script>
+    var addUserPage = {
+
+        init: function () {
+            this.submitClick();
+            this.checkedAllClick();
+            this.rolesChange();
+            // this.getIfCheckedAll();
+        },
+        submitClick: function () {
+            var that = this;
+            $(".submit-btn").click(function () {
+                var userName = $("input[name=usr]").val();
+                var password = $("input[name=pwd]").val();
+                var roles = that.getChecked();
+                if (!userName || !password) {
+                    layer.msg("请完善用户信息后添加用户");
+                    return false;
+                }
+                if (password.length < 8) {
+                    layer.msg("请输入长度大于等于8位字符的密码");
+                    return false;
+                }
+                layer.load();
+                $.ajax({
+                    url: '/index/user/addAction',
+                    type: 'POST',
+                    dataType: '',
+                    // 当前修改用户id及 用户组id数组
+                    data: {
+                        'username': userName,
+                        'password': password,
+                        'roles': roles
+                    },
+                    complete: function (xhr, textStatus) {
+                        //called when complete
+                    },
+                    success: function (data, textStatus, xhr) {
+                        //console.log(data);
+                        if (data.status === 1) {
+                            layer.closeAll('loading');
+                            layer.msg("添加成功");
+                            window.location.href = "/index/user/list"
+                        } else {
+                            layer.closeAll('loading');
+                            layer.msg(data.data);
+                        }
+                    },
+                    error: function (xhr, textStatus, errorThrown) {
+                        //  console.log("error");
+                        layer.closeAll('loading');
+                        layer.msg("服务端错误")
+                    }
+                });
+            })
+        },
+        // 选中全部点击事件
+        checkedAllClick: function () {
+            $(".checkedAll").click(function () {
+                var roles = $("input[name=roles]");
+                var bool = true;
+                if (!this.checked) {
+                    bool = false;
+                }
+                for (var i = 0; i < roles.length - 1; i++) {
+                    roles[i].checked = bool;
+                }
+            })
+        },
+        // 用户权限修改选中事件
+        rolesChange: function () {
+            // 获取是否全部选中
+            var that = this;
+            $("input[name=roles]").click(function () {
+                that.getIfCheckedAll();
+            })
+        },
+        // 获取是否全部选中
+        getIfCheckedAll: function () {
+            var roles = $("input[name=roles]");
+            var bool = true;
+            for (var i = 0; i < roles.length - 1; i++) {
+                if (!roles[i].checked) {
+                    bool = false;
+                }
+            }
+            $(".checkedAll")[0].checked = bool;
+        },
+        // 获取选中的权限id数组
+        getChecked: function () {
+            var roles = $("input[name=roles]");
+            var arr = [7];
+            for (var i = 0; i < roles.length - 1; i++) {
+                if (roles[i].checked) {
+                    arr.unshift(+roles[i].value)
+                }
+            }
+            //  console.log(arr);
+            return arr;
+        }
+    };
+    $(function () {
+        addUserPage.init();
+    })
+</script>

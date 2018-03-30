@@ -1,0 +1,26 @@
+<div class="classify-page navigation-page">
+    <div class="component-classify">
+        {volist name="list" id="vo"}
+        <dl class="classify-box clearfix" id="navigation_0" style="display: block;">
+            <dt class="classify-classname" data-id="10">
+                <a href="/index/navigation/index?id={$vo.id}">
+                    {$vo.name}({$vo.sum})
+                </a>
+            </dt>
+            {volist name="$vo['children']" id="children"}
+            <dd class="classify-subclass pull-left">
+                <a data-id="1002"
+                   href="/index/navigation/list?category_id={$children.id}">
+                    {$children.name}
+
+                    <b class="nub">
+                        ({$children.components_count})
+                    </b>
+                </a>
+            </dd>
+            {/volist}
+
+        </dl>
+        {/volist}
+    </div>
+</div>

@@ -1,0 +1,232 @@
+<!-- 元器件数据管理列表页 -->
+<div class="page-container">
+
+    <div class="admin-main-box">
+        <div class="data-tabel-top clearfix" style="margin-bottom: 16px;">
+            <div class="pull-left">
+                <a class="btn btn-primary btn-sm" href="add.html">
+                添加数据
+            </a>
+                <a class="btn btn-primary" href="exportAllComponentAction">
+                导出所有数据
+            </a>
+            </div>
+            <div class="ant-input-search pull-right ant-input-affix-wrapper" style="width: 340px;">
+                <form action="/index/component/list">
+                    <button type="submit" class="btn ant-btn ant-btn-primary pull-right">
+                        搜索
+                    </button>
+                    <input type="text" placeholder="请输入完整的物资编码或型号" class="ant-input pull-right" name="key">
+                </form>
+            </div>
+        </div>
+        <div class="ant-table-wrapper">
+            <div class="ant-spin-nested-loading">
+                <div class="ant-spin-container">
+                    <div class="ant-table ant-table-large ant-table-scroll-position-left">
+                        <div class="ant-table-content">
+                            <div class="ant-table-body">
+                                <table class="">
+                                    <thead class="ant-table-thead">
+                                        <tr>
+                                            <th></th>
+                                            <th width="130">物资编码</th>
+                                            <th>名称</th>
+                                            <th>型号</th>
+                                            <th>生产厂家</th>
+                                            <th>生产控制质量等级</th>
+                                            <th>供货状态</th>
+                                            <th>数据手册</th>
+                                            <th width="80">操作</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="ant-table-tbody">
+                                        {volist name="list" id="vo"}
+                                        <tr class="ant-table-row  ant-table-row-level-0">
+                                            <td>
+                                                {empty name="$vo['disable']"}
+                                                <input type="checkbox" class="ciss-checkbox" name="pid" value="{$vo.pid}"> {/empty}
+                                            </td>
+                                            <td class="">
+                                                {notempty name="$vo['disable']"}
+                                                <span>
+                                                {$vo.serial_no}
+                                            </span>
+                                                <span class="red">(停用)</span> {else/}
+                                                <a target="_blank" href="/index/component/detail?sn={$vo.serial_no}">
+                                                {$vo.serial_no}
+                                            </a> {/notempty}
+                                            </td>
+                                            <td class="">
+                                                {$vo.name}
+
+                                            </td>
+                                            <td class="">
+                                                {$vo.specification_model_no}
+
+                                            </td>
+                                            <td class="">
+                                                <span style="display: block; max-width: 200px; margin: 0px auto;">
+                                                {$vo.manufacturer.name}
+                                            </span>
+                                            </td>
+                                            <td class="">
+                                                {$vo.quality}
+                                            </td>
+                                            <td class="">
+                                                <span>{$vo.supply_status}</span>
+                                            </td>
+                                            <td class="">
+                                                {if !empty($vo['datasheet'])}
+                                                <a href="/{$vo.datasheet.path}" title="  {$vo.datasheet.name}" target="_blank" style="color: red;">
+                                                    <img style="width:16px;" src="/static/assets/img/pdf.png" alt="">
+
+                                                </a> {else}
+                                                <img style="width:16px;" src="/static/assets/img/pdf_null.png" alt=""> {/if}
+
+                                            </td>
+                                            <td class="">
+                                                <p class="tabel-edit">
+                                                    {notempty name="$vo['disable']"}
+                                                    <a href="/index/component/restoreAction?pid={$vo.pid}">还原</a> {else/}
+                                                    <span style="margin-right: 8px;">
+                                                    <a href="/index/component/edit?sn={$vo.serial_no}">编辑</a>
+                                                </span>
+
+                                                    <a data-href="/index/component/deleteAction?pid={$vo.pid}" class="deletComponent">删除</a> {/notempty}
+                                                </p>
+                                            </td>
+                                        </tr>
+                                        {/volist}
+                                        <tr class="last-tr">
+                                            <td class="text-left " colspan="8">
+                                                <label class="checkbox inline">
+                                                    <input type="checkbox"   class="ciss-checkbox"  id="checkedAll" name="checkedAll">全选
+                                                </label>
+                                                <button type="button" class="btn ant-btn submit-delet">批量删除</button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div class="pagination-box">
+                                    {$list|raw}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+</div>
+<!-- Modal -->
+<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="myModalLabel">确定删除元器件？
+        </h3>
+    </div>
+    <div class="modal-body">
+        <p>确定删除后，元器件将被标识为停用状态。</p>
+    </div>
+    <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+        <button class="btn btn-primary submit-pass">确定</button>
+    </div>
+</div>
+<!-- Modal -->
+<script>
+    var componentListPage = {
+        init: function() {
+            this.checkedAllClick();
+            this.submitClick();
+            this.checkedChange();
+            this.deletUserClick();
+        },
+        deletUserClick: function() {
+            $(".deletComponent").click(function() {
+                var thisHref = $(this).attr("data-href");
+                $("#myModal").modal("show");
+                $(".submit-pass").click(function() {
+                    window.location.href = thisHref;
+                })
+            })
+        },
+        // 全选按钮点击事件
+        checkedAllClick: function() {
+            $("#checkedAll").click(function() {
+                var $pid = $("input[name=pid]");
+                var bChecked = this.checked;
+                for (var i = 0, l = $pid.length; i < l; i++) {
+                    $pid[i].checked = bChecked;
+                }
+            })
+        },
+        // 更新全选按钮状态
+        checkedChange: function() {
+            $("input[name=pid]").click(function() {
+                var bool = true;
+                var $pid = $("input[name=pid]");
+                for (var i = 0, l = $pid.length; i < l; i++) {
+                    if (!$pid[i].checked) {
+                        bool = false;
+                        break;
+                    }
+                }
+                $("#checkedAll")[0].checked = bool;
+            })
+
+        },
+        submitClick: function() {
+            $(".submit-delet").click(function() {
+
+                var pids = [];
+                var $pid = $("input[name=pid]:checked");
+                for (var i = 0, l = $pid.length; i < l; i++) {
+                    pids.push($pid[i].value);
+                }
+                if (pids.length < 1) {
+                    layer.msg("您还没有选择")
+                    return false;
+                }
+                $("#myModal").modal("show");
+                $(".submit-pass").click(function() {
+                    layer.load();
+                    $.ajax({
+                        url: "/index/component/deleteMultiAction",
+                        type: 'POST',
+                        dataType: 'json',
+                        // 当前修改用户id及 用户组id数组
+                        data: {
+                            pids: pids
+                        },
+                        complete: function(xhr, textStatus) {
+                            //called when complete
+                        },
+                        success: function(res, textStatus, xhr) {
+                            layer.closeAll('loading');
+                            if (res.status != 1) {
+                                layer.msg(res.data)
+                                return false;
+                            }
+                            layer.msg("提交修改成功");
+                            setTimeout(function() {
+                                window.location.reload();
+                            }, 300)
+                        },
+                        error: function(xhr, textStatus, errorThrown) {
+                            layer.closeAll('loading');
+                            layer.msg("服务端错误")
+                        }
+                    });
+                })
+
+            })
+        }
+    }
+    $(function() {
+        componentListPage.init();
+    })
+</script>

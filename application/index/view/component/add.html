@@ -1,0 +1,213 @@
+<!-- 添加元器件页面 -->
+<div class="admin-main-box">
+    <div>
+        <form action="" class="add-component-form">
+            <div class="component-detail-tabs">
+                <div class="data-tabel-top clearfix" style="margin-bottom: 16px;">
+                    <span class="title">
+                                        添加元器件
+                                    </span>
+                </div>
+                <div style="height: auto; overflow: auto;">
+                    <div style="height: inherit; overflow-x: hidden; overflow-y: auto;">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>
+                                        <span>数据（<em>*</em><small>为必填项</small> ）</span>
+                                    </th>
+                                    <th>
+                                        <span>内容</span>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody style="height: inherit;">
+                                <!--               <tr>
+                                               <td>产品图片</td>
+                                               <td>
+                                                   <div>
+                                                       <img src="" alt="">
+                                                   </div>
+                                                   <button type="button" class="btn ant-btn" id="upload-img" data-type="4" data-img="1"
+                                                           data-msg="产品图片" data-name="components_picture">上传
+                                                   </button>
+                                                   <p class="upload-img"></p>
+                                                   <input type="hidden" name="component_pic">
+
+                                               </td>
+                                           </tr>-->
+                                <tr>
+                                    <td><em>*</em>产品大类</td>
+                                    <td>
+                                        <select name="category" id="category">
+                                        {volist name="category" id="vo"}
+                                        <option value="{$vo.id}">
+                                            {$vo.name}
+                                        </option>
+                                        {/volist}
+                                    </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><em>*</em>产品小类</td>
+                                    <td>
+                                        <select name="category_id" id="sub_category">
+                                        <!-- TODO: 动态获取 -->
+                                        <option value="">选择分类</option>
+                                    </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><em>*</em>物资编码(物资编码为WG或WP开头10位字符)</td>
+                                    <td>
+
+                                        <input type="text" name="serial_no" class="ant-input edit-input-text" value="">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><em>*</em>型号规格</td>
+                                    <td>
+                                        <input type="text" name="specification_model_no" class="ant-input edit-input-text" value="">
+                                    </td>
+
+                                </tr>
+                                <tr>
+                                    <td><em>*</em>生产厂家</td>
+                                    <td>
+                                        <input type="hidden" name="manufacturer_id">
+                                        <input type="hidden" name="manufacturer_name">
+                                        <span class="manufacturerName"></span>
+                                        <button type="button" class="btn ant-btn" href="#myModal" role="button" data-toggle="modal">选择
+                                    </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>国产/进口</td>
+                                    <td>
+                                        <label for="" class="radio inline">
+                                        <input checked type="radio" class="ciss-radio" name="origin" value="国产">国产
+                                    </label>
+                                        <label for="" class="radio inline">
+                                        <input type="radio" name="origin"  class="ciss-radio" value="进口">进口
+                                    </label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>供货状态</td>
+                                    <td>
+                                        <label for="" class="radio inline">
+                                        <input checked type="radio"  class="ciss-radio" name="supply_status" value="1">可用
+                                    </label>
+                                        <label for="" class="radio inline">
+                                        <input type="radio" name="supply_status" class="ciss-radio" value="2">优选
+                                    </label>
+                                        <label for="" class="radio inline">
+                                        <input type="radio" name="supply_status" class="ciss-radio" value="3">推荐
+                                    </label>
+                                        <label for="" class="radio inline">
+                                        <input type="radio" name="supply_status" class="ciss-radio" value="4">限用
+                                    </label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>生产控制质量等级</td>
+                                    <td><input type="text" name="quality" class="ant-input edit-input-text" value=""></td>
+                                </tr>
+                                <tr>
+                                    <td>可靠性预计质量等级</td>
+                                    <td><input type="text" name="reliability_quality" class="ant-input edit-input-text" value=""></td>
+                                </tr>
+                                <tr>
+                                    <td>封装形式</td>
+                                    <td><input type="text" name="package" class="ant-input edit-input-text" value="">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><em>*</em>名称</td>
+                                    <td><input type="text" name="name" class="ant-input edit-input-text" value=""></td>
+                                </tr>
+                                <tr>
+                                    <td>温度范围</td>
+                                    <td><input type="text" name="temperature_low" class="ant-input edit-input-text-s" value=""> ℃~
+                                        <input type="text" name="temperature_high" class="ant-input edit-input-text-s" value=""> ℃
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>规范号</td>
+                                    <td>
+                                        <input type="text" name="norm_no" class="ant-input edit-input-text" value="">
+                                    </td>
+                                </tr>
+                                <!--  <tr>
+                                  <td>数据手册</td>
+                                  <td>
+                                      <div class="view-box"></div>
+                                      <button class="btn ant-btn" type="button" id="upload-datasheet" data-type="1"
+                                              data-msg="数据手册" data-name="datasheet_path">上传
+                                      </button>
+                                      <p class="upload-datasheet"></p>
+                                      <input type="hidden" name="datasheet_path">
+                                  </td>
+                              </tr>
+                              <tr>
+                                  <td>执行标准</td>
+                                  <td>
+                                      <div class="view-box"></div>
+                                      <button class="btn ant-btn" type="button" id="upload-executive" data-type="6"
+                                              data-msg="执行标准" data-name="executive_standard">上传
+                                      </button>
+                                      <p class="upload-executive-state"></p>
+                                      <input type="hidden" name="executive_standard">
+                                  </td>
+                              </tr>
+                              <tr>
+                                  <td>外形尺寸图</td>
+                                  <td>
+                                      <div class="view-box"></div>
+                                      <button class="btn ant-btn" type="button" id="upload-dimension" data-type="7"
+                                              data-msg="外形尺寸图" data-name="dimension_picture">上传
+                                      </button>
+                                      <p class="upload-dimension-state"></p>
+                                      <input type="hidden" name="dimension_picture"/>
+                                  </td>
+                              </tr>-->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="edit-btn-box" style="text-align: center; margin: 10px 0px;">
+                <button type="submit" class="ant-btn ant-btn-primary submit-change" style="width: 130px; height: 40px; margin-right: 30px; background-color: rgb(59, 123, 220);">
+                    <span>新增元器件</span>
+                </button>
+                <button type="button" onClick="cissCommon.goBack()" class="ant-btn ant-btn-primary" style="width: 130px; height: 40px; margin-right: 10px; background-color: rgb(248, 248, 248); color: rgb(59, 123, 220);">
+                    <span>取 消</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- Modal -->
+<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="myModalLabel">生产厂商修改
+            <small>请选择生产厂家</small>
+        </h3>
+    </div>
+    <div class="modal-body">
+        <div class="autocomplet-box text-center">
+            <input type="text" class="manufacturer-modal-input">
+            <div class="autocomplet-list text-left">
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+        <button class="btn btn-primary">确定</button>
+    </div>
+</div>
+<!-- <script src="/static/assets/js/component_edit.js">
+</script> -->
+<script src="/static/assets/js/Q.Uploader.file.all.js"></script>
+<script src="/static/assets/js/component_add.js"></script>

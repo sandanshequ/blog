@@ -1,0 +1,38 @@
+<!--搜索结果 :目录页面-->
+<div class="classify-page navigation-page">
+    <div class="reminder-bar">
+        <div class="result-reminder">
+            <p class="nub pull-left">
+                符合 "
+                <span class="orange">{$search_key}</span>
+                "条件的搜索结果：
+                <span class="orange">{$list.total}</span>
+                项
+            </p>
+        </div>
+    </div>
+    <div class="component-classify">
+        {volist name="list.category" id="vo"}
+        <dl class="classify-box clearfix" id="navigation_0" style="display: block;">
+            <dt class="classify-classname" data-id="10">
+                <a href="/index/navigation/index?id={$vo.id}">
+                    {$vo.name}({$vo.doc_count})
+                </a>
+            </dt>
+            {volist name="$vo['sub']" id="children"}
+            <dd class="classify-subclass pull-left">
+                <a data-id="1002"
+                   href="/index/navigation/list?category_id={$children.id}&key={$search_key}">
+                    {$children.name}
+
+                </a>
+                <b class="nub">
+                    ({$children.doc_count})
+                </b>
+            </dd>
+            {/volist}
+
+        </dl>
+        {/volist}
+    </div>
+</div>

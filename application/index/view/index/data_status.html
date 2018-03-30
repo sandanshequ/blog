@@ -1,0 +1,112 @@
+<!-- 入库申请列表 数据修改申请日志 -->
+<div class="page-container-box apply-log-page">
+    <div class="page-container">
+        <div class="admin-main-box">
+            <div class="data-tabel-top clearfix" style="margin-bottom: 16px;">
+                <span class="title">
+                    <a href="/index/index/data_status" class="text-info">元器件在审核状态</a>
+                </span>
+            </div>
+            <div class="ant-table-wrapper">
+                <div class="ant-spin-nested-loading">
+                    <div class="ant-spin-container">
+                        <div class="ant-table ant-table-large ant-table-scroll-position-left">
+                            <div class="ant-table-content">
+                                <div class="ant-table-body">
+                                    <table class="">
+
+                                        <thead class="ant-table-thead">
+                                            <tr>
+                                                <th class="">
+                                                    <span>
+                                                    <!-- react-text: 2242 -->物资编码
+                                                    <!-- /react-text -->
+                                                </span>
+                                                </th>
+                                                <th class="">
+                                                    <span>
+                                                    <!-- react-text: 2245 -->名称
+                                                    <!-- /react-text -->
+                                                </span>
+                                                </th>
+                                                <th class="">
+                                                    <span>
+                                                    <!-- react-text: 2248 -->型号
+                                                    <!-- /react-text -->
+                                                </span>
+                                                </th>
+                                                <th class="">
+                                                    <span>
+                                                    <!-- react-text: 2251 -->审核状态
+                                                    <!-- /react-text -->
+                                                </span>
+                                                </th>
+                                                <th class="">
+                                                    <span>
+                                                    <!-- react-text: 2254 -->申请修改时间
+                                                    <!-- /react-text -->
+                                                </span>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="ant-table-tbody">
+                                            {volist name='list' id='vo'}
+                                            <tr class="ant-table-row  ant-table-row-level-0">
+                                                <td class="">
+                                                    {if empty($vo['component']['disable'])}
+                                                    <a href="/index/component/detail?sn={$vo.component_sn}">
+                                                        {$vo.component.serial_no}
+                                                    </a>{else}
+                                                    <span>
+                                                        {$vo.component.serial_no}
+                                                        (停用)
+                                                    </span>
+                                                    {/if}
+
+                                                </td>
+                                                <td class="">
+                                                    <span>
+                                                    {$vo.component.name}
+                                                </span>
+                                                </td>
+                                                <td class="">
+                                                    {$vo.component.specification_model_no}
+                                                </td>
+                                                <td class="">
+                                                    {if $vo['result']=='审核通过'}
+                                                    <p class="green">
+                                                        {elseif $vo['result']=='待审核' /}
+                                                        <p class="warning">
+                                                            {else/}
+                                                            <p class="red" data-msg="{$vo.remark}">
+                                                                {/if} {$vo.result}
+                                                            </p>
+                                                </td>
+                                                <td class="">
+                                                    {$vo.updated_at}
+                                                </td>
+                                            </tr>
+                                            {/volist}
+                                        </tbody>
+                                    </table>
+
+                                    <div class="pagination-box">
+                                        {$list|raw}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(".ant-table-wrapper .red").mouseover(function() {
+        var msg = $(this).attr("data-msg") ? $(this).attr("data-msg") : "无";
+        layer.tips("原因：" + msg, $(this), {
+            tips: [1, "rgb(59, 123, 220)"]
+        })
+    })
+</script>

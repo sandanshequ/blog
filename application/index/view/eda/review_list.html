@@ -1,0 +1,91 @@
+<!-- EDA文件修改申请审核列表页 -->
+<div class="page-container-box data-admin-page">
+    <div class="page-container">
+
+        <div class="admin-main-box">
+            <div class="data-tabel-top" style="margin-bottom: 16px;">
+                <span class="title">EDA文件修改申请</span>
+            </div>
+            <div class="ant-table-wrapper">
+                <div class="ant-spin-nested-loading">
+                    <div class="ant-spin-container">
+                        <div class="ant-table ant-table-large ant-table-scroll-position-left">
+                            <div class="ant-table-content">
+                                <div class="ant-table-body">
+                                    <table class="">
+
+                                        <thead class="ant-table-thead">
+                                            <tr>
+                                                <th class="">
+                                                    <span><!-- react-text: 1417 -->物资编码<!-- /react-text --></span>
+                                                </th>
+                                                <th class="">
+                                                    <span><!-- react-text: 1420 -->符号名称<!-- /react-text --></span>
+                                                </th>
+                                                <th class="">
+                                                    <span><!-- react-text: 1423 -->原理图符号文件<!-- /react-text --></span>
+                                                </th>
+                                                <th class="">
+                                                    <span><!-- react-text: 1426 -->封装名称<!-- /react-text --></span>
+                                                </th>
+                                                <th class="">
+                                                    <span><!-- react-text: 1429 -->封装文件<!-- /react-text --></span>
+                                                </th>
+                                                <th class="">
+                                                    <span><!-- react-text: 1432 -->申请修改时间<!-- /react-text --></span>
+                                                </th>
+                                                <th class="">
+                                                    <span><!-- react-text: 1435 -->操作<!-- /react-text --></span>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="ant-table-tbody">
+                                            {volist name="list" id="vo"}
+                                            <tr class="ant-table-row  ant-table-row-level-0">
+                                                <td class="">
+                                                    <a href="/index/component/detail?sn={$vo.component_sn|default='无'}">
+                                                    {$vo.component_sn|default='无'}
+                                                </a>
+                                                </td>
+                                                <td class="">
+                                                    {$vo.eda_lib_ref|default='无'}
+                                                </td>
+                                                <td class="">
+                                                    {if empty($vo['eda_lib_path'])} 无 {else/}
+                                                    <a href="/eda/{$vo.eda_footprint_path|default='#'}" download="{$vo.eda_footprint_path}" style="color: rgb(59, 123, 220);">{$vo.eda_lib_path|default='无'}
+                                                </a> {/if}
+                                                </td>
+                                                <td class="">
+                                                    {php} echo $vo['eda_footprint_ref']??"无" {/php}
+                                                </td>
+                                                <td class="">
+                                                    {if empty($vo['eda_footprint_path'])} 无 {else/}
+                                                    <a href="/eda/{$vo.eda_footprint_path|default='#'}" download="{$vo.eda_footprint_path}" style="color: rgb(59, 123, 220);">{$vo.eda_footprint_path|default='无'}
+                                                </a> {/if}
+                                                </td>
+                                                <td class="">
+                                                    {$vo.created_at}
+                                                </td>
+                                                <td class="">
+                                                    <p class="tabel-edit">
+                                                        <a href="/index/eda/review_detail?sn={$vo.component_sn}">
+                                                        开始审核
+                                                    </a>
+                                                    </p>
+                                                </td>
+                                            </tr>
+                                            {/volist}
+                                        </tbody>
+                                    </table>
+                                    <div class="pagination-box">
+                                        {$list|raw}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

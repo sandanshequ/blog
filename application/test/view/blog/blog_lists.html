@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" style="height:100%;">
+ 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>CETC元器件数据平台</title>
+    <link rel="stylesheet" href="/static/assets/css/main.css" />
+
+</head>
+
+<div class="page-container">
+
+    <div class="admin-main-box">
+        <div class="data-tabel-top clearfix" style="margin-bottom: 16px;">
+            <div class="pull-left">
+                <a class="btn btn-primary btn-sm" href="/test/blog/add">
+                添加博客
+            </a>
+                
+            </div>
+            <div class="ant-input-search pull-right ant-input-affix-wrapper" style="width: 340px;">
+                <form action="/test/blog/lists">
+                    <input type="text" placeholder="请输入用户名" class="ant-input pull-right" name="username" {if isset($username)} value="{$username}" {else/} value="" {/if}>
+                    <input type="text" placeholder="请输入博客标题" class="ant-input pull-right" name="title" {if isset($title)} value="{$title}" {else/} value="" {/if}>
+                    <button type="submit" class="btn ant-btn ant-btn-primary pull-right">
+                        搜索
+                    </button>
+                </form>
+            </div>
+        </div>
+        <div class="ant-table-wrapper">
+            <div class="ant-spin-nested-loading">
+                <div class="ant-spin-container">
+                    <div class="ant-table ant-table-large ant-table-scroll-position-left">
+                        <div class="ant-table-content">
+                            <div class="ant-table-body">
+                                <table class="">
+                                    <thead class="ant-table-thead">
+                                        <tr>
+                                            <th></th>
+                                            <th>用户</th>
+                                            <th>博客标题</th>
+                                            <th width="100">操作</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="ant-table-tbody">
+                                        {volist name="list" id="vo"}
+                                        <tr class="ant-table-row  ant-table-row-level-0">
+                                            <td>
+                                              <input type="checkbox" class="ciss-checkbox" name="bid" value="{$vo.bid}">
+                                            </td>
+                                            <td>
+                                                {$vo.username}
+                                            </td>
+                                            <td>
+                                                <a href="/test/comment/lists?bid={$vo.bid}">{$vo.title}</a>
+                                            </td>
+                                            <td width="100" align="center">
+                                                <a href="/test/blog/modify?bid={$vo.bid}">编辑</a>
+                                                <a href="/test/blog/delete?bid={$vo.bid}">删除</a>
+                                            </td>
+                                            
+                                        </tr>
+                                        {/volist}
+                                        
+                                    </tbody>
+                                </table>
+                                <div class="pagination-box">
+                                    {$list|raw}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+</div>
+
+<!-- Modal -->
+<script>
+
+</script>

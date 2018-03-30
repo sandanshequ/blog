@@ -1,0 +1,186 @@
+<!-- 用户权限修改页 -->
+<div>
+    <div class="classify-page">
+        <div class="component-detail-breadcrumbs">
+            <span class="component-detail-breadcrumbs-item">
+                <a href="/index/user/list">用户管理 </a>
+            </span>
+
+            <i class="iconfont">&gt;</i>
+            <span class="component-detail-breadcrumbs-item">
+                修改用户权限
+            </span>
+        </div>
+        <div class="info">
+            <h5>
+                用户名： {$data.username}
+            </h5>
+            <p>选择角色</p>
+        </div>
+        <div>
+            <div class="ant-table-wrapper">
+                <div class="ant-spin-nested-loading">
+                    <div class="ant-spin-container">
+                        <div class="ant-table ant-table-large ant-table-bordered ant-table-scroll-position-left">
+                            <div class="ant-table-content">
+                                <div class="ant-table-body">
+                                    <table class="">
+                                        <thead class="ant-table-thead">
+                                        <tr>
+                                            <th class="ant-table-selection-column">
+                                                <input type="checkbox" class="checkedAll ciss-checkbox">
+                                            </th>
+                                            <th class="">
+                                                <span>
+                                                    <!-- react-text: 10095 -->角色名称
+                                                </span>
+                                            </th>
+                                            <th class="">
+                                                <span>
+                                                    <!-- react-text: 10098 -->备注
+                                                </span>
+                                            </th>
+                                        </tr>
+                                        </thead>
+                                        <tbody class="ant-table-tbody">
+
+                                        {volist name="groups" id="vo"}
+
+                                        <tr class="ant-table-row  ant-table-row-level-0">
+                                            <td class="ant-table-selection-column">
+                                                {if in_array($vo['id'],$roles)}
+                                                {if($vo.id == 1) && in_array(1,$user_groups) || $vo.id == 7}
+                                                <input type="checkbox" class="ciss-checkbox" name="roles"
+                                                       value="{$vo.id}" checked disabled="disabled"> {else}
+                                                <input type="checkbox" class="ciss-checkbox" name="roles"
+                                                       value="{$vo.id}" checked>
+                                                {/if}
+
+                                                {else/} {if($vo.id == 7)}
+                                                <input type="checkbox" class="ciss-checkbox" name="roles"
+                                                       value="{$vo.id}" checked disabled="disabled"> {else/}
+                                                <input type="checkbox" class="ciss-checkbox" name="roles"
+                                                       value="{$vo.id}"> {/if} {/if}
+                                            </td>
+                                            <td class="">
+                                                <span class="ant-table-row-indent indent-level-0"
+                                                      style="padding-left: 0px;"></span>
+                                                {$vo.name}
+                                            </td>
+                                            <td class="">
+                                                {$vo.description}
+                                            </td>
+                                        </tr>
+                                        {/volist}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button type="button" class="ant-btn changeBtn ant-btn-primary submit-btn">
+            <span>确认修改</span>
+        </button>
+    </div>
+</div>
+<script>
+    var editUserPage = {
+        init: function () {
+            this.submitClick();
+            this.checkedAllClick();
+            this.rolesChange();
+            this.getIfCheckedAll();
+        },
+        // 提交按钮点击事件
+        submitClick: function () {
+            var that = this;
+            $(".submit-btn").click(function () {
+                layer.load();
+                var userId = cissCommon.getUrlParam("id");
+                var roles = that.getChecked();
+                $.ajax({
+                    url: '/index/user/editGroupAction',
+                    type: 'POST',
+                    dataType: '',
+                    // 当前修改用户id及 用户组id数组
+                    data: {
+                        'id': userId,
+                        'roles': roles
+                    },
+                    complete: function (xhr, textStatus) {
+                        //called when complete
+                    },
+                    success: function (res, textStatus, xhr) {
+                        layer.closeAll('loading');
+                        if (res.status != 1) {
+                            layer.msg("修改失败");
+                            return false;
+                        }
+                        layer.msg("修改成功");
+                        window.location.href = "/index/user/list"
+                    },
+                    error: function (xhr, textStatus, errorThrown) {
+                        //    console.log("error");
+                        layer.closeAll('loading');
+                        layer.msg("服务端错误")
+                    }
+                });
+            })
+
+        },
+        // 选中全部点击事件
+        checkedAllClick: function () {
+            $(".checkedAll").click(function () {
+                var roles = $("input[name=roles]");
+                var bool = true;
+                if (!this.checked) {
+                    bool = false;
+                }
+                for (var i = 0; i < roles.length - 1; i++) {
+                    if ($(roles[i]).attr("disabled") === "disabled") {
+                        continue;
+                    }
+                    roles[i].checked = bool;
+                }
+            })
+        },
+        // 用户权限修改选中事件
+        rolesChange: function () {
+            // 获取是否全部选中
+            var that = this;
+            $("input[name=roles]").click(function () {
+                that.getIfCheckedAll();
+            })
+        },
+        // 获取是否全部选中
+        getIfCheckedAll: function () {
+            var roles = $("input[name=roles]");
+            var bool = true;
+            for (var i = 0; i < roles.length - 1; i++) {
+                if (!roles[i].checked) {
+                    bool = false;
+                }
+            }
+            $(".checkedAll")[0].checked = bool;
+        },
+        // 获取选中的权限id数组
+        getChecked: function () {
+            var roles = $("input[name=roles]");
+            var arr = [7];
+            for (var i = 0; i < roles.length - 1; i++) {
+
+                if (roles[i].checked) {
+                    arr.unshift(+roles[i].value)
+                }
+            }
+            // console.log(arr);
+            return arr;
+        }
+    };
+    $(function () {
+        editUserPage.init();
+    })
+</script>

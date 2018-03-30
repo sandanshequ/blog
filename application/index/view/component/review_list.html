@@ -1,0 +1,115 @@
+<!-- 元器件参数修改申请审核列表页 -->
+<div class="page-container-box data-admin-page">
+    <div class="page-container">
+
+        <div class="admin-main-box">
+            <div class="data-tabel-top" style="margin-bottom: 16px;">
+                <span class="title">元器件参数修改申请</span>
+            </div>
+            <div class="ant-table-wrapper">
+                <div class="ant-spin-nested-loading">
+                    <div class="ant-spin-container">
+                        <div class="ant-table ant-table-large ant-table-scroll-position-left">
+                            <div class="ant-table-content">
+                                <div class="ant-table-body">
+                                    <table>
+                                        <thead class="ant-table-thead">
+                                            <tr>
+                                                <th>
+                                                    <span>
+                                                    物资编码
+                                                </span>
+                                                </th>
+                                                <th>
+                                                    <span>
+                                                    名称
+                                                </span>
+                                                </th>
+                                                <th>
+                                                    <span>
+                                                    型号
+                                                </span>
+                                                </th>
+                                                <th>
+                                                    <span>
+                                                    生产厂家
+                                                </span>
+                                                </th>
+                                                <th>
+                                                    <span>
+                                                    生产控制质量等级
+                                                </span>
+                                                </th>
+                                                <th>
+                                                    <span>
+                                                    供货状态
+                                                </span>
+                                                </th>
+                                                <th>
+                                                    <span>
+                                                    申请修改时间
+                                                </span>
+                                                </th>
+                                                <th>
+                                                    <span>
+                                                    操作
+                                                </span>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="ant-table-tbody">
+
+                                            {volist name="list" id="vo"}
+
+                                            <tr class="ant-table-row  ant-table-row-level-0">
+                                                <td class="">
+
+                                                    <a href="/index/component/detail?sn={$vo.serial_no}">
+                                                    {$vo.serial_no}
+                                                </a>
+                                                </td>
+                                                <td>
+                                                    {$vo.name}
+                                                </td>
+                                                <td>
+                                                    {$vo.specification_model_no}
+                                                </td>
+                                                <td>
+                                                    <span style="display: block; max-width: 200px; margin: 0px auto;">
+                                                {$vo.manufacturer.name}
+                                            </span>
+                                                </td>
+                                                <td>
+                                                    {$vo.quality}
+                                                </td>
+                                                <td>
+                                                    <span>{$vo.supply_status}</span>
+                                                </td>
+                                                <td>
+                                                    {$vo.created_at}
+                                                </td>
+                                                <td>
+                                                    <p class="tabel-edit">
+                                                        <a href="/index/component/review_detail?sn={$vo.serial_no}">
+                                                        开始审核
+                                                    </a>
+                                                    </p>
+                                                </td>
+                                            </tr>
+                                            {/volist}
+
+                                        </tbody>
+                                    </table>
+                                    <div class="pagination-box">
+                                        {$list|raw}
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

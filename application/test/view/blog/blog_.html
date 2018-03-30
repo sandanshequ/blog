@@ -1,0 +1,86 @@
+<!DOCTYPE html> 
+<html lang="en" style="height:100%;">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>CETC元器件数据平台</title>
+    <link rel="stylesheet" href="/static/assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/static/assets/css/reset.css" />
+    <link rel="stylesheet" href="/static/assets/css/login.css" />
+
+</head>
+
+<body style="background: rgb(59, 123, 220);height:100%;">
+    <div class="AppView">
+        <div class="login">
+            
+            <form action="{:url('test/comment/add','act=do')}" enctype="multipart/form-data" method="post">
+                <div class=" col-md-12">
+                    <div class="control-group">
+                        <label class="control-label" for="inputEmail">标题：</label>
+                        <div class="controls">
+                            <input type="text" id="title" name = "title" placeholder="请输入标题">
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="inputPassword">内容：</label>
+                        <div class="controls">
+                            <textarea rows="5" cols="20"  name="content" placeholder="请输入内容"></textarea>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="inputPassword">上传图片：</label>
+                        <div class="controls">
+                            <input type="file" id="img_url" name="imgUrl" >
+                        </div>
+                        <div>
+                          <image src=""  width="200px" height="100px" id="picture">
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <input type="hidden" id="image" name="image_path" value="">
+                    </div>
+                </div>
+                <div class="control-group">
+                    <button type="submit" name="login" class="btn submit-btn">提交</button>
+                </div>
+            </form>
+                <p class="text-center support">赛思库提供技术支持www.cissdata.com</p>
+            </div>
+        </div>
+    </div>
+    <script src="/static/assets/js/jquery-1.9.1.min.js"></script>
+    <script src="/static/assets/js/bootstrap.min.js"></script>
+    <script src="/static/assets/js/layer/layer.js"></script>
+    <script src="/static/assets/js/ajaxfileupload.js"></script>
+</body>
+
+</html>
+
+<script>
+{literal}
+    //上传图片
+    $("#img_url").on("change",function(){
+        
+           $.ajaxFileUpload({
+                url: '/test/comment/upload', //用于文件上传的服务器端请求地址
+                secureuri: false, //是否需要安全协议，一般设置为false
+                fileElementId: 'img_url', //文件上传域的ID
+                dataType: 'json', //返回值类型 一般设置为json
+                success: function (json) { //服务器成功响应处理函数
+                    console.log(json);
+                   if(json.status == 1){
+                        $("#picture").attr('src', json.savename);
+                        $("#image").val(json.realname);
+                   }
+
+                },
+                error: function (data, status, e) {//服务器响应失败处理函数
+                  alert("上传图片失败");
+                }
+          })
+    })
+{/literal}
+</script>

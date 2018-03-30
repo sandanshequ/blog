@@ -1,0 +1,129 @@
+<!-- 审计 eda修改日志 -->
+<div class="page-container-box data-admin-page">
+    <div class="page-container">
+        <!-- react-text: 9098 -->
+        <!-- /react-text -->
+        <div class="admin-main-box">
+            <div class="data-tabel-top clearfix" style="margin-bottom: 16px;">
+                <span class="title pull-left">
+                    <a href="/index/audit/eda" class="text-info">EDA修改日志</a>
+                </span>
+                <div class="ant-input-search pull-right ant-input-affix-wrapper" style="width: 340px;">
+                    <form action="/index/audit/eda">
+                        <button type="submit" class="btn ant-btn ant-btn-primary pull-right">
+                            搜索
+                        </button>
+                        <input type="text" placeholder="请输入完整的物资编码或型号" class="ant-input pull-right" name="key">
+                    </form>
+                </div>
+            </div>
+            <div class="ant-table-wrapper">
+                <div class="ant-spin-nested-loading">
+                    <div class="ant-spin-container">
+                        <div class="ant-table ant-table-large ant-table-scroll-position-left">
+                            <div class="ant-table-content">
+                                <div class="ant-table-body">
+                                    <table class="">
+                                        <thead class="ant-table-thead">
+                                            <tr>
+                                                <th class="">
+                                                    <span><!-- react-text: 9134 -->物资编码<!-- /react-text --></span>
+                                                </th>
+                                                <th class="">
+                                                    <span><!-- react-text: 9137 -->名称<!-- /react-text --></span>
+                                                </th>
+                                                <th class="">
+                                                    <span><!-- react-text: 9140 -->型号<!-- /react-text --></span>
+                                                </th>
+                                                <th class="">
+                                                    <span><!-- react-text: 9143 -->修改人<!-- /react-text --></span>
+                                                </th>
+                                                <th class="">
+                                                    <span><!-- react-text: 9146 -->修改时间<!-- /react-text --></span>
+                                                </th>
+                                                <th class="">
+                                                    <span><!-- react-text: 9149 -->审核人<!-- /react-text --></span>
+                                                </th>
+                                                <th class="">
+                                                    <span><!-- react-text: 9152 -->审核时间<!-- /react-text --></span>
+                                                </th>
+                                                <th class="">
+                                                    <span><!-- react-text: 9155 -->审核结果<!-- /react-text --></span>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="ant-table-tbody">
+                                            {volist name="list" id="vo"}
+                                            <tr class="ant-table-row  ant-table-row-level-0">
+                                                <td class="">
+                                                    {if empty($vo['component']['disable'])}
+                                                    <a href="/index/component/detail?sn={$vo.component_sn}">
+                                                    {$vo.component.serial_no}
+                                                </a>{else}
+                                                    <span>
+                                                    {$vo.component.serial_no}
+                                                    (停用)
+                                                </span> {/if}
+                                                    </a>
+                                                </td>
+                                                <td class="">
+                                                    <span>
+                                                    {$vo.component.name}
+                                                </span>
+                                                </td>
+                                                <td class="">
+                                                    <span>{$vo.component.specification_model_no}</span>
+                                                </td>
+                                                <td class="">
+                                                    <span class="red" data-msg="{$vo.eda_review.reason|default='无'}">
+                                                    <img style="width:16px;"  src="/static/assets/img/point-icon.png" alt="">{$vo.user.username|default='无'}
+                                                </span>
+                                                </td>
+                                                <td class="">
+                                                    {$vo.created_at}
+                                                </td>
+                                                <td class="">
+                                                    <span>
+                                                    {$vo.reviewer.username|default='无'}
+                                                </span>
+                                                </td>
+                                                <td class="">
+                                                    {$vo.updated_at}
+                                                </td>
+                                                <td class="">
+                                                    {if $vo['result']=='审核通过' || $vo['result']=='管理员修改'}
+                                                    <span class="green">
+                                                    {$vo.result}
+                                                </span> {else/}
+                                                    <span class="red" data-msg="{$vo.remark}">
+                                                    <img style="width:16px;"  src="/static/assets/img/point-icon.png" alt="">{$vo.result}
+                                                </span> {/if}
+                                                </td>
+                                            </tr>
+                                            {/volist}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pagination-box">
+                            {$list|raw}
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- react-text: 9158 -->
+        <!-- /react-text -->
+    </div>
+</div>
+
+<script>
+    $(".ant-table-wrapper .red").mouseover(function() {
+        var msg = $(this).attr("data-msg") ? $(this).attr("data-msg") : "无";
+        layer.tips("原因：" + msg, $(this), {
+            tips: [1, "rgb(59, 123, 220)"]
+        })
+    })
+</script>

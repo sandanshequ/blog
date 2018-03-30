@@ -1,0 +1,56 @@
+<div class="header clearfix" id="top-bar">
+    <!-- header start -->
+    <div class="header-container clearfix">
+        <div class="logo pull-left">
+            <a href="#" style="width:20px;padding-right:0;" class="toogle-slidebar" title="展开收起侧边导航">
+                <img src="/static/assets/img/nav.png" style="width:20px;" alt="">
+            </a><a href="/" style="padding-left:5px;">
+            CETC20元器件数据平台
+        </a>
+        </div>
+        <div class="nav pull-left">
+            <a href="{:url('/index/navigation')}">分类导航</a>
+            <a href="{:url('/index/navigation/select')}">优选目录</a>
+        </div>
+        <div class="header-right pull-right clearfix">
+            <div class="h-r-item search pull-left">
+                <div class="ciss-auto-complete-box">
+                    <div class="auto-input">
+                        <input type="text" id="ciss-header-input" placeholder="物资编码、型号规格、生产厂家、名称">
+                        <div class="search-icon pull-right" id="headerSearch">
+                            <i class="icon-search "></i>
+                        </div>
+                    </div>
+                    <div class="ciss-auto-complete">
+
+                    </div>
+                </div>
+            </div>
+            <div class="h-r-item ciss-notic pull-left">
+                <a href="{:url('/index/index/inform')}">EDA库通知
+            </a></div>
+            <div class="h-r-item btn-group pull-left header-menu">
+                <p class="header-dropdown">
+                    <b style="cursor:default;">
+                    {$Think.session.user.username}
+                </b>
+                    <a href="/index/user/logoutAction">退出</a>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- 通知 -->
+<div class="message-modal hide" data-id="">
+    <div class="message-modal-main clearfix">
+        <p class="text pull-left">
+            <span style="color: rgb(102, 102, 102);" class="eda-modal-name">xxxx.schlib</span> 文件已于 <span class="eda-modal-date"> 2017-12-13 14：09 </span>更新 ，
+            <a href="/index/index/inform.html">查看</a>
+
+        </p>
+        <span class="pull-right close">知道了</span>
+    </div>
+</div>

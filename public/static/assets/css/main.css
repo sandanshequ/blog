@@ -1,0 +1,740 @@
+/*header start*/
+
+body,
+html {
+    min-height: 720px;
+    height: 720px/9;
+}
+
+.header {
+    width: 100%;
+    height: 56px;
+    background: rgb(59, 123, 220);
+    border-bottom: 1px solid #e5e5e5;
+    color: #fff;
+    position: fixed;
+    _position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 99;
+    min-width: 1100px;
+}
+
+.header .logo a {
+    color: #fff;
+    font-size: 22px;
+    line-height: 56px;
+    letter-spacing: 2px;
+    letter-spacing: 0px\9;
+    font-size: 20px\9;
+    padding-left: 20px;
+    padding-right: 40px;
+}
+
+.header-right .h-r-item.search {
+    width: 280px;
+    margin-right: 20px;
+}
+
+.header-right .search {
+    +display: none;
+}
+
+.header .nav a {
+    font-size: 14px;
+    color: #fff;
+    padding-right: 30px;
+    line-height: 58px;
+}
+
+.header a:hover {
+    opacity: .8;
+}
+
+.header-right {
+    padding-right: 30px;
+    padding-top: 10px;
+    line-height: 32px;
+    _width: 600px;
+    float: right;
+    +padding-right: 100px;
+}
+
+.header-right .search input {
+    height: 22px;
+    width: 280px;
+    margin: 0\9!important;
+    padding: 0\9!important;
+    display: inline\9!important;
+    line-height: 28px\9!important;
+    height: 28px\9;
+    font-size: 14px;
+}
+
+.header-right .auto-input {
+    position: relative;
+    height: 34px;
+}
+
+.header-right .search .search-icon {
+    color: #fff;
+    cursor: pointer;
+    position: absolute;
+    top: 0;
+    right: 0px;
+    top: 3px\9;
+    +top: 7px;
+}
+
+.btn-group .header-dropdown {
+    background: rgb(59, 123, 220);
+    color: #fff;
+    border: none;
+    width: 110px;
+    height: 34px;
+    line-height: 34px;
+    display: inline-block;
+    margin-bottom: 0;
+    font-size: 14px;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+}
+
+.header-dropdown .caret {
+    margin-top: 14px;
+}
+
+.header-right .dropdown-menu {
+    min-width: 130px;
+    _width: 130px;
+}
+
+.header-right .h-r-item {
+    padding-left: 20px;
+}
+
+.header-right .ciss-notic a {
+    color: #fff;
+}
+
+
+/* header over */
+
+.search-screen-page {
+    min-width: 1100px;
+    margin: 0 auto;
+    _padding-top: 20px;
+}
+
+
+/* 侧边导航 */
+
+.slidebar {
+    position: fixed;
+    _position: absolute;
+    width: 206px;
+    border-right: 1px solid rgb(59, 123, 220);
+    height: auto;
+    overflow: auto;
+    overflow-x: hidden;
+    left: 0;
+    top: 0;
+    height: 100%;
+    padding-top: 56px;
+    z-index: 98;
+    background: #fff;
+    padding-bottom: 60px;
+}
+
+.slidebar .nav {
+    margin: 0;
+    padding: 0;
+    width: 206px;
+    overflow: auto;
+    overflow-x: hidden;
+    height: 100%;
+    padding-bottom: 120px;
+    height: 750px;
+}
+
+.slidebar .nav-list li a {
+    margin: 0;
+    padding: 0;
+    padding-left: 20px;
+    font-size: 16px;
+}
+
+.slidebar .nav li.active .title {
+    /* //background: rgb(59, 123, 220); */
+    /* color: #fff; */
+    border-left: 3px solid rgb(59, 123, 220)
+}
+
+.slidebar .nav li.active .title {
+    background: none;
+    color: #333;
+}
+
+.slidebar .nav li .sub-nav-show {
+    display: none;
+}
+
+.slidebar .nav li.active .sub-nav-show {
+    display: inline;
+}
+
+.slidebar .nav li.active .sub-nav-hide {
+    display: none;
+}
+
+.slidebar .nav li .sub-nav {
+    display: none;
+}
+
+.slidebar .nav li .sub-nav a {
+    padding-left: 60px;
+    font-size: 14px;
+}
+
+.slidebar .nav li.active .sub-nav {
+    display: block;
+}
+
+.slidebar .nav a {
+    height: 36px;
+    line-height: 36px;
+    width: 100%;
+    display: block;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.slidebar .nav li a.none-sub-nav:hover {
+    background: rgb(59, 123, 220);
+    color: #fff;
+}
+
+.container-fluid {
+    margin-left: 210px;
+    min-height: 500px;
+    min-width: 800px;
+}
+
+.slidebar .sub-nav a {
+    font-size: 14px;
+}
+
+.slidebar .sub-nav .active a {
+    background: rgb(109, 155, 224);
+    color: #fff;
+}
+
+.slidebar .sub-nav a:hover {
+    background: rgb(109, 155, 224);
+    color: #fff;
+}
+
+
+/* 分页器 */
+
+.pagination-box {
+    text-align: center;
+    overflow: hidden;
+}
+
+.pagination {
+    /* display: inline-block; */
+    /* padding-right: 100px; */
+    /* float: right; */
+    /* margin-bottom: 20px; */
+    display: inline-block;
+    margin-bottom: 0;
+    margin-left: 0;
+    margin: 20px auto;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    text-align: center;
+    border-left: 1px solid #ddd;
+    overflow: hidden;
+}
+
+.pagination li {
+    display: inline;
+    _float: left;
+    _width: 40px;
+}
+
+.pagination>li>a,
+.pagination>li>span {
+    float: left;
+    padding: 4px 12px;
+    line-height: 20px;
+    font-size: 16px;
+    text-decoration: none;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-left-width: 0;
+}
+
+.pagination li.disabled {
+    cursor: no-drop;
+}
+
+.pagination li.active a,
+.pagination li.active span {
+    background: rgb(59, 123, 220);
+    color: #fff;
+}
+
+.pagination li:hover a {
+    background: rgb(59, 123, 220);
+    color: #fff;
+}
+
+
+/* 表格公共样式 */
+
+.ant-table-body td,
+.ant-table-body th {
+    _padding: 10px 0;
+    _border-bottom: 1px solid #e5e5e5;
+    font-size: 14px;
+}
+
+.fl {
+    float: left;
+}
+
+.fr {
+    float: right;
+}
+
+.gray {
+    color: gray;
+}
+
+.upload-input {
+    position: absolute;
+    overflow: hidden;
+}
+
+.upload-html4 {
+    position: absolute;
+    left: -10000px;
+    top: -10000px;
+}
+
+.u-loaded {
+    color: green;
+}
+
+.u-total {
+    color: #FC5900;
+}
+
+.ui-file .u-item {
+    background-color: #f5f5f5;
+    height: 36px;
+    line-height: 36px;
+    font-size: 13px;
+    margin: 10px;
+    padding: 0 10px;
+    position: relative;
+}
+
+.ui-file .u-name {
+    min-width: 100px;
+    color: #369;
+    margin-right: 10px;
+}
+
+.ui-file .u-size,
+.ui-file .u-speed,
+.ui-file .u-progress-bar,
+.ui-file .u-detail,
+.ui-file .u-state,
+.ui-file .u-op {
+    float: left;
+    text-align: center;
+}
+
+.ui-file .u-progress-bar {
+    width: 150px;
+    height: 7px;
+    overflow: hidden;
+    margin: 15px 6px 0 0;
+    padding: 1px 0;
+}
+
+.ui-file .u-progress {
+    width: 1px;
+    height: 7px;
+    background-position: 0 -9px;
+}
+
+.ui-file .u-detail {
+    width: 55px;
+}
+
+.ui-file .u-state {
+    min-width: 45px;
+}
+
+.ui-file .u-size {}
+
+.ui-file .u-speed {
+    width: 85px;
+}
+
+.ui-file .u-op {
+    margin-left: 5px;
+}
+
+.ui-file .u-op a {
+    cursor: pointer;
+    margin-left: 5px;
+    color: #369;
+    text-decoration: none;
+}
+
+.ui-file .u-op a:hover {
+    text-decoration: underline;
+}
+
+.html4 .u-progress-bar,
+.html4 .u-detail,
+.html4 .u-speed {
+    display: none;
+}
+
+.html4 .u-size {
+    margin: 0 10px;
+}
+
+.ui-file .u-over .u-state {
+    color: #999;
+}
+
+.ui-file .u-over .u-op .u-op-cancel {
+    color: #999;
+    text-decoration: none;
+    cursor: default;
+}
+
+.ciss-dropdown {
+    margin: 5px;
+}
+
+
+/* 头部搜索 */
+
+.header-menu .header-dropdown {
+    position: relative;
+    line-height: 32px;
+}
+
+.header-dropdown a {
+    padding-left: 10px;
+    color: #fff;
+}
+
+.header-dropdown a:hover {
+    color: #fff;
+    text-decoration: underline;
+    opacity: 0.8;
+    filter: opacity(alpha=80);
+}
+
+.header-right .ciss-auto-complete {
+    background: #e5e5e5;
+    padding: 0 5px;
+}
+
+.header-right .search-autoComplete-title {
+    color: #999;
+    line-height: 20px;
+}
+
+.header-right .auto-complete-item {
+    font-size: 14px;
+    line-height: 24px;
+}
+
+.header-right .auto-complete-item a {
+    display: block;
+    width: 100%;
+}
+
+.header-right .auto-complete-item:hover a {
+    color: rgb(59, 123, 220);
+}
+
+
+/* 数据管理平台表格 */
+
+.ant-table-wrapper .last-tr input {
+    margin-left: 0;
+}
+
+.ant-table-wrapper .last-tr button {
+    margin-top: 5px;
+    margin-left: 20px;
+}
+
+.text-info {
+    color: rgb(59, 123, 220);
+}
+
+
+/* 元器件编辑表格公共样式 */
+
+.component-detail-tabs table {
+    background-color: rgb(255, 255, 255);
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0px;
+    table-layout: fixed;
+    font-family: Roboto, sans-serif;
+}
+
+.component-detail-tabs thead {
+    border-bottom: 1px solid rgb(224, 224, 224);
+    background: rgb(243, 246, 248);
+}
+
+.component-detail-tabs thead tr {
+    border-bottom: 1px solid rgb(224, 224, 224);
+    color: rgba(0, 0, 0, 0.87);
+    height: 48px;
+}
+
+.component-detail-tabs thead th {
+    font-weight: normal;
+    font-size: 14px;
+    padding-left: 24px;
+    padding-right: 24px;
+    height: 56px;
+    text-align: center;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    color: rgb(158, 158, 158);
+    position: relative;
+    background-color: inherit;
+    /* width: 300px; */
+    border: 1px solid rgb(229, 229, 229);
+}
+
+.component-detail-tabs tbody tr .red {
+    color: red;
+}
+
+.component-detail-tabs tbody th {
+    border-bottom: 1px solid rgb(224, 224, 224);
+    color: rgba(0, 0, 0, 0.87);
+    height: 48px;
+}
+
+.component-detail-tabs tbody td {
+    padding-left: 24px;
+    padding-right: 24px;
+    height: 48px;
+    text-align: center;
+    font-size: 13px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    background: rgb(255, 255, 255);
+    /* width: 300px;  570*/
+    border: 1px solid rgb(229, 229, 229);
+}
+
+.component-detail-tabs tbody .active td {
+    border-bottom: 1px solid red;
+}
+
+form .component-detail-tabs .ant-btn {
+    width: 80px;
+    height: 30px;
+    background-color: rgb(59, 123, 220);
+    color: #fff;
+    line-height: 26px;
+    font-weight: normal;
+    text-shadow: 0;
+}
+
+form .component-detail-tabs .ant-btn:hover {
+    color: #fff;
+}
+
+.modal .autocomplet-list {
+    height: 200px;
+    overflow: auto;
+    border: 1px solid #e5e5e5;
+    width: 230px;
+    margin: 0 auto;
+}
+
+.modal .autocomplet-list .autocomplet-item {
+    width: 200px;
+    margin: 0 auto;
+    font-size: 14px;
+    padding: 5px 5px;
+    cursor: pointer;
+}
+
+.modal .autocomplet-list .autocomplet-item:hover {
+    color: #1998ed;
+}
+
+.modal {
+    _position: absolute;
+    _top: 20px;
+    _left: 50%;
+    _margin_left: -200px;
+    _z-index: 999;
+    _background: #fff;
+    _filter: alpha(opacity=100);
+}
+
+.modal-backdrop {
+    _background: #000;
+    _filter: alpha(opacity=50);
+    _position: absolute;
+    _top: 0;
+    _left: 0;
+    _width: 100%;
+    _height: 1000px;
+    _z-index: 900;
+}
+
+form .component-detail-tabs textarea {
+    width: 100%;
+}
+
+
+/* 元器件详情页 */
+
+.componet-detail-page .product-order a {
+    line-height: 26px;
+}
+
+.componet-detail-page .detail-tab {
+    margin-bottom: 10px;
+}
+
+.componet-detail-page .detail-tab .tab-list {
+    width: 112px;
+    height: 48px;
+    line-height: 48px;
+    text-align: center;
+    border-bottom: 3px solid #fff;
+    font-size: 16px;
+    color: #999;
+}
+
+.componet-detail-page .detail-tab .tab-list.active,
+.componet-detail-page .detail-tab .tab-list:hover {
+    border-bottom: 3px solid #3b7bdc;
+    color: #3b7bdc;
+    cursor: pointer;
+}
+
+.componet-detail-page .detail-table {
+    background-color: rgb(255, 255, 255);
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0px;
+    table-layout: fixed;
+    font-family: Roboto, sans-serif;
+}
+
+.componet-detail-page .detail-table tr {
+    border-bottom: 1px solid rgb(224, 224, 224);
+    color: rgba(0, 0, 0, 0.87);
+    height: 48px;
+}
+
+.componet-detail-page .detail-table .td-left {
+    padding-left: 24px;
+    padding-right: 24px;
+    height: 48px;
+    text-align: right;
+    font-size: 13px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    background: rgb(248, 248, 248);
+    width: 26%;
+    border: 1px solid rgb(229, 229, 229);
+}
+
+.componet-detail-page .detail-table .td-right {
+    padding-left: 24px;
+    padding-right: 24px;
+    height: 48px;
+    text-align: left;
+    font-size: 13px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    background: rgb(255, 255, 255);
+    border: 1px solid rgb(229, 229, 229);
+}
+
+.layui-layer-hui {
+    _position: absolute;
+    _top: 200px!important;
+    _left: 50%!important;
+    _margin-left: -80px;
+    _width: 160px;
+    +background: #000;
+}
+
+.layui-layer-hui {
+    +background: #000;
+    _background: #000;
+    +background: #000!important;
+    +filter: alpha(opacity=100);
+}
+
+.layui-layer-hui .layui-layer-content {
+    +background: #000;
+    _background: #000;
+}
+
+.layui-layer-dialog .layui-layer-content {
+    +color: #fff;
+}
+
+
+/* ie6 input hack */
+
+.ciss-checkbox {
+    _width: 30px;
+}
+
+.ciss-radio {
+    _width: 30px;
+}
+
+.header .header-container {
+    _width: 1200px;
+    _margin: 0 auto;
+}
+
+.header .logo {
+    _margin-top: 15px;
+}
+
+.header .auto-input {
+    +display: none;
+}
+
+.result-nub .result-search {
+    +width: 300px;
+    -width: 300px;
+}

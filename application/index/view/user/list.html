@@ -1,0 +1,108 @@
+<!-- 用户列表页 -->
+<div id="UserList" class="user_list">
+    <div class="admin-main-box">
+        <div class="data-tabel-top clearfix" style="margin-bottom: 16px;">
+            <span class="title">
+                <a href="/index/user/list" class="text-info">用户列表</a>
+            </span>
+        </div>
+        <div style="padding: 0px 20px 20px;">
+            <div class="ant-table-wrapper">
+                <div class="ant-spin-nested-loading">
+                    <div class="ant-spin-container">
+                        <div class="ant-table ant-table-large ant-table-bordered ant-table-scroll-position-left">
+                            <div class="ant-table-content">
+                                <div class="ant-table-body">
+                                    <table class="">
+                                        <colgroup>
+                                            <col style="width: 50%; min-width: 50%;">
+                                            <col>
+                                        </colgroup>
+                                        <thead class="ant-table-thead">
+                                        <tr>
+                                            <th class="">
+                                                <span><!-- react-text: 9891 -->用户名<!-- /react-text --></span>
+                                            </th>
+                                            <th class="">
+                                                <span><!-- react-text: 9894 -->操作<!-- /react-text --></span>
+                                            </th>
+                                        </tr>
+                                        </thead>
+                                        <tbody class="ant-table-tbody">
+                                        {volist name='list' id='vo'}
+                                        <tr class="ant-table-row  ant-table-row-level-0">
+                                            <td class="">
+                                                <span class="ant-table-row-indent indent-level-0"
+                                                      style="padding-left: 0px;"></span>
+                                                <i>
+                                                    {$vo.username}
+                                                </i>
+                                            </td>
+                                            <td class="">
+                                                <div>
+                                                    <i class="editorSpot">
+                                                        <a href="/index/user/edit?id={$vo.id}"
+                                                           style="margin-right: 3px; color: rgb(59, 123, 220);">
+                                                            权限调整
+                                                        </a>
+                                                    </i>
+                                                    {neq name="$Think.session.user.id" value="$vo.id"}
+                                                    <a data-href="/index/user/deleteAction?id={$vo.id}"
+                                                       class="text-error deletUser">
+                                                        删除
+                                                        {else}
+
+                                                        {/neq}
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        {/volist}
+                                        </tbody>
+                                    </table>
+                                    <div class="pagination-box">
+                                        {$list|raw}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="myModalLabel">确定删除该用户？
+        </h3>
+    </div>
+    <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+        <button class="btn btn-primary submit-pass">确定</button>
+    </div>
+</div>
+<!-- Modal -->
+<script>
+    var userListPage = {
+        init: function () {
+            this.deletUserClick();
+        },
+        deletUserClick: function () {
+            $(".deletUser").click(function () {
+                var thisHref = $(this).attr("data-href");
+                $("#myModal").modal("show");
+                $(".submit-pass").click(function () {
+                    window.location.href = thisHref;
+                })
+            })
+        }
+    }
+    $(function () {
+        userListPage.init();
+    })
+</script>

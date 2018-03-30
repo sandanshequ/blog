@@ -1,0 +1,114 @@
+<div class="slidebar show">
+    <ul class="nav nav-list">
+        {assign name='user_groups' value="$Think.session.group_ids"/} {if in_array(6,$user_groups)}
+        <li class="active">
+            <a href="#" class="title has-sub-nav">
+                <span class="sub-nav-show">-</span>
+                <span class="sub-nav-hide">+</span>
+                <span class="menu-text"> 元器件数据管理</span>
+            </a>
+            <ul class="sub-nav ">
+                <li class="{:getLiActive('component/index',@$nav_name)}">
+                    <a href="/index/component/list">元器件列表</a>
+                </li>
+                <li class="{:getLiActive('component/add',@$nav_name)}">
+                    <a href="/index/component/add">添加元器件</a></li>
+                <li class="{:getLiActive('component/import',@$nav_name)}">
+                    <a href="/index/component/import">导入数据</a></li>
+            </ul>
+        </li>
+        {/if} {if in_array(5,$user_groups)}
+        <li class="active">
+            <a href="/index/eda/list" class="title none-sub-nav">
+                <span class="sub-nav-hide"></span>
+                <span class="menu-text">EDA文件库管理</span>
+            </a>
+        </li>
+        {/if} {if in_array(4,$user_groups) OR in_array(3,$user_groups)}
+
+        <li class="active">
+            <a href="#" class="title has-sub-nav">
+                <span class="sub-nav-show">-</span>
+                <span class="sub-nav-hide">+</span>
+                <span class="menu-text"> 审核</span>
+            </a>
+            <ul class="sub-nav ">
+                {if in_array(4,$user_groups)}
+                <li class="{:getLiActive('component/review_list',@$nav_name)}">
+                    <a href="/index/component/review_list">
+                        <span class="menu-text">元器件修改审核</span>
+                    </a>
+                </li>
+                {/if} {if in_array(3,$user_groups)}
+                <li class="{:getLiActive('eda/review_list',@$nav_name)}">
+                    <a href="/index/eda/review_list">
+                        <span class="menu-text">EDA修改审核</span>
+                    </a>
+                </li>
+                {/if}
+            </ul>
+        </li>
+        {/if} {if in_array(2,$user_groups)}
+        <li class="active">
+            <a href="#" class="title has-sub-nav">
+                <span class="sub-nav-show">-</span>
+                <span class="sub-nav-hide">+</span>
+                <span class="menu-text"> 审计</span>
+            </a>
+            <ul class="sub-nav">
+                <li class="{:getLiActive('audit/component',@$nav_name)}">
+                    <a href="/index/audit/component">元器件修改日志</a>
+                </li>
+                <li class="{:getLiActive('audit/eda',@$nav_name)}">
+                    <a href="/index/audit/eda">EDA修改日志</a></li>
+                <li class="{:getLiActive('audit/multi_upload',@$nav_name)}">
+                    <a href="/index/audit/multi_upload">批量上传日志</a>
+                </li>
+            </ul>
+        </li>
+        {/if} {if in_array(1,$user_groups)}
+        <li class="active">
+            <a href="#" class="title has-sub-nav">
+                <span class="sub-nav-show">-</span>
+                <span class="sub-nav-hide">+</span>
+                <span class="menu-text"> 用户管理</span>
+            </a>
+            <ul class="sub-nav ">
+                <li class="{:getLiActive('user/list',@$nav_name)}">
+                    <a href="/index/user/list">用户列表</a></li>
+                <li class="{:getLiActive('user/add',@$nav_name)}">
+                    <a href="/index/user/add">添加用户</a></li>
+            </ul>
+        </li>
+        {/if}
+        <li class="active">
+            <a href="#" class="title  has-sub-nav">
+                <span class="sub-nav-show">-</span>
+                <span class="sub-nav-hide">+</span>
+                <span class="menu-text"> 个人信息</span>
+            </a>
+            <ul class="sub-nav ">
+                <li class="{:getLiActive('index/data_status',@$nav_name)}">
+                    <a href="/index/index/data_status">元器件审核状态</a>
+                </li>
+                <li class="{:getLiActive('index/eda_status',@$nav_name)}">
+                    <a href="/index/index/eda_status">EDA审核状态</a>
+                </li>
+                <li class="{:getLiActive('index/change_password',@$nav_name)}">
+                    <a href="/index/index/change_password">修改密码</a>
+                </li>
+            </ul>
+        </li>
+    </ul>
+</div>
+
+<script>
+    $(".nav-list .has-sub-nav").click(function() {
+        var $li = $(this).parents("li");
+        if ($li.hasClass("active")) {
+            $li.removeClass("active")
+        } else {
+            $li.addClass("active")
+        }
+    })
+</script>

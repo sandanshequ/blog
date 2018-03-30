@@ -1,0 +1,161 @@
+<!-- 首页 -->
+<div class="home-page">
+    <div class="ciss-home-search">
+        <div class="home-search-box clearfix">
+            <div class="ciss-slogan-box">
+                <p class="ciss-slogan">
+                    <span class="ciss-slogan-left">CETC20</span>
+                    <span class="ciss-slogan-right">元器件数据平台</span>
+                </p>
+            </div>
+            <div class="input-box clearfix">
+                <input type="text" value="物资编码、型号规格、生产厂家、名称" autocomplete="off" class="search" name="q">
+                <p class="home-search-btn">
+                    <span class="home-search-btn-left">搜索</span>
+                </p>
+                <div class="search-autoComplete">
+                    <!-- <dl style="display: block;">
+                        <dt class="search-autoComplete-title">
+                            <span>型号规格</span>
+                        </dt>
+                        <a title="C027500FAK" class="" href="">
+                            <dd class="auto-complete-item">C027500FAK</dd>
+                        </a>
+                        <a title="C027500FAK" class="" href="">
+                            <dd class="auto-complete-item">C027500FAK</dd>
+                        </a>
+                    </dl> -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(function() {
+        var homePage = {
+            $HomeInput: $(".ciss-home-search .search"),
+            autoCompleteIndex: -1,
+            autoCompleteArr: [{
+                key: "model_suggest",
+                val: "型号规格",
+                column: "specification_model_no"
+            }, {
+                key: "man_suggest",
+                val: "生产厂商",
+                column: "manufacturer_name"
+            }, {
+                key: "ming_suggest",
+                val: "元器件名称",
+                column: "name"
+            }],
+            oComplete: $(".search-autoComplete"),
+            init: function() {
+                this.inputChange();
+                this.inputOnFocus();
+                this.inputOnBlur();
+                this.searchBtnClick();
+            },
+            searchBtnClick: function() {
+                var that = this;
+                $(".home-search-btn").click(function() {
+                    var val = that.$HomeInput.val();
+                    // console.log(val);
+                    if (val && val != "物资编码、型号规格、生产厂家、名称") {
+                        window.location.href = "/index/search/index?q=" + val;
+                    }
+                })
+            },
+            inputOnFocus: function() {
+                this.$HomeInput.focus(function() {
+                    //console.log(1243)
+                    var val = $(this).val();
+                    if (val == "物资编码、型号规格、生产厂家、名称") {
+                        $(this).val("")
+                    }
+                })
+            },
+            inputOnBlur: function() {
+                this.$HomeInput.blur(function() {
+                    var val = $(this).val();
+                    if (val == "") {
+                        $(this).val("物资编码、型号规格、生产厂家、名称")
+                    }
+                })
+            },
+            inputChange: function() {
+                var that = this;
+                this.$HomeInput.keyup(function(e) {
+                    //   clearTimeout(that.timer);
+                    var val = $(this).val();
+                    var index = that.autoCompleteIndex;
+                    var autoCompleteItem = $(".auto-complete-item");
+                    if (e.keyCode === 40) {
+                        index++;
+                        if (index >= autoCompleteItem.length) {
+                            index = 0
+                        }
+                        that.autoCompleteIndex = index;
+                        autoCompleteItem.removeClass("active");
+                        autoCompleteItem.eq(index).addClass("active");
+                        var autoCompleteText = autoCompleteItem.eq(index).attr("data-text")
+                        that.$HomeInput.val(autoCompleteText);
+                        return true;
+                    }
+                    if (e.keyCode === 38) {
+                        index--;
+                        if (index <= -1) {
+                            index = autoCompleteItem.length - 1;
+                        }
+                        that.autoCompleteIndex = index;
+                        autoCompleteItem.removeClass("active");
+                        autoCompleteItem.eq(index).addClass("active");
+                        var autoCompleteText = autoCompleteItem.eq(index).attr("data-text");
+                        that.$HomeInput.val(autoCompleteText);
+                        return true;
+                    }
+                    if (e.keyCode === 13) {
+                        if ($(".auto-complete-item.active").length > 0) {
+                            window.location.href = "/index/search/index?column=" +
+                                $(".auto-complete-item.active").attr("data-column") + "&q=" + $(".auto-complete-item.active").attr("data-text");
+                            return;
+                        }
+                        window.location.href = "/index/search/index?q=" + val;
+                        return;
+                    }
+                    // that.timer= setTimeout(function(){
+                    that.getAutoCompletData(val)
+                        // },100)
+                })
+            },
+            getAutoCompletData: function(val) {
+                var that = this;
+                $(".auto-complete-item").removeClass("active");
+                $.get("/index/search/search_suggest?key=" + val, function(res) {
+                    var html = "";
+                    if (res.status === 1) {
+                        var sugData = res.data;
+                        var arr = [];
+                        for (var i = 0, lg = that.autoCompleteArr.length; i < lg; i++) {
+                            var jLg = sugData[that.autoCompleteArr[i].key].length;
+                            var disSug = jLg < 1 ? 'none' : 'block';
+                            html +=
+                                '<dl  style="display:' + disSug + '">' +
+                                '<dt class="search-autoComplete-title"><span>' + that.autoCompleteArr[i].val + '</span></dt>';
+
+                            for (var j = 0; j < jLg; j++) {
+                                html +=
+                                    "<dd data-text='" + sugData[that.autoCompleteArr[i].key][j].text + "' data-column='" + that.autoCompleteArr[i].column + "' class='auto-complete-item'>" +
+                                    "<a  href='/index/search/index?column=" + that.autoCompleteArr[i].column + "&q=" +
+                                    sugData[that.autoCompleteArr[i].key][j].text + "' >" + sugData[that.autoCompleteArr[i].key][j].text + " </a>" +
+                                    "</dd>"
+                            }
+                            html += '</dl>'
+                        }
+                        that.oComplete.html(html)
+                    }
+                })
+            }
+        };
+        homePage.init();
+    })
+</script>

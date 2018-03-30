@@ -1,0 +1,332 @@
+<form class="submit-component-data" action="" enctype="multipart/form-data">
+    <input type="hidden" name="id" value="{$data.serial_no}" />
+    <input type="hidden" name="pid" value="{$data.pid}" />
+    <input type="hidden" name="category_id" value="{$data.category.id}" />
+    <div class="component-edit-page">
+        <div class="classify-page">
+            <div class="component-detail-breadcrumbs">
+                <span class="component-detail-breadcrumbs-item">
+                                    <a href="/index/navigation">分类导航 </a>
+                                </span>
+                <i class="iconfont">&gt;</i>
+                <span class="component-detail-breadcrumbs-item">
+                                    <a href="/index/navigation/index?id={$data.category.parent.id}">
+                                        {$data.category.parent.name}
+                                    </a></span>
+                <i class="iconfont">&gt;</i>
+                <span class="component-detail-breadcrumbs-item">
+                                    <a href="/index/navigation/list?category_id={$data.category.id}">
+                                        {$data.category.name}
+                                    </a>
+                                </span>
+                <i class="iconfont">&gt;</i>
+                <span class="component-detail-breadcrumbs-item">
+                                    {$data.specification_model_no|default='--'}
+                                </span>
+            </div>
+            <div>
+                <div class="component-detail-tabs">
+                    <div style="height: auto; overflow: auto;">
+                        <table style="overflow:hidden;">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        <span> 数据</span>
+                                    </th>
+                                    <th>
+                                        <span> 内容</span>
+                                    </th>
+                                    <th>
+                                        <span> 操作</span>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <span> 物资编码</span>
+                                    </td>
+                                    <td>
+                                        <span> {$data.serial_no}</span>
+                                    </td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span>符号名称</span>
+                                    </td>
+                                    <td>
+                                        <input type="text" class="ant-input edit-input-text" name="eda_lib_ref" value="{$data.eda_lib_ref}">
+                                    </td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span>原理图符号文件<span class="red">(文件上传类型为.SchLib,.PcbLib)</span></span>
+                                    </td>
+                                    <td>
+                                        {empty name="data.eda_lib_path"} 无 {else/}
+                                        <a href="/eda/{$data.eda_lib_path}">{$data.eda_lib_path}</a> {/empty}
+                                        <input type="hidden" name="eda_lib_path" value="{$data.eda_lib_path}">
+                                    </td>
+                                    <td>
+                                        <button type="button" class="btn ant-btn" id="upload-ad-lib" data-type="8" data-msg="原理图符号文件" data-name="eda_lib_path">替换
+                                        </button>
+                                        <p class="upload-ad-lib-state upload-state"></p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span>封装名称</span>
+                                    </td>
+                                    <td>
+                                        <input type="text" name="eda_footprint_ref" class="ant-input edit-input-text" value="{$data.eda_footprint_ref}"></td>
+                                    <td></td>
+                                </tr>
+                                <tr style=" height: 48px;">
+                                    <td>
+                                        <span> 封装库文件<span class="red">(文件上传类型为.SchLib,.PcbLib)</span></span>
+                                    </td>
+                                    <td>
+                                        {empty name="data.eda_footprint_path"} 无 {else/}
+                                        <a href="/eda/{$data.eda_footprint_path}">{$data.eda_footprint_path}</a> {/empty}
+                                        <input type="hidden" name="eda_footprint_path" value="{$data.eda_footprint_path}">
+                                    </td>
+                                    <td>
+                                        <button type="button" class="btn ant-btn" id="upload-ad-footprint" data-type="9" data-msg="封装库文件" data-name="eda_footprint_path">替换
+                                        </button>
+                                        <p class="upload-ad-footprint-state upload-state"></p>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="edit-btn-box" style="text-align: center; margin: 10px 0px;">
+                {eq name="role" value="admin"}
+                <button type="button" role="button" data-toggle="modal" class="ant-btn ant-btn-primary submit-change" style="width: 130px; height: 40px; margin-right: 30px; background-color: rgb(59, 123, 220);">
+                        <span>修改</span>
+                    </button> {else/}
+                <button type="button" href="#remarkModel" role="button" data-toggle="modal" class="ant-btn ant-btn-primary" style="width: 130px; height: 40px; margin-right: 30px; background-color: rgb(59, 123, 220);">
+                        <span>申请修改</span>
+                    </button> {/eq}
+
+                <button type="button" onClick="cissCommon.goBack()" class="ant-btn ant-btn-primary" style="width: 130px; height: 40px; margin-right: 10px; background-color: rgb(248, 248, 248); color: rgb(59, 123, 220);">
+                        <span>取 消</span>
+                    </button>
+            </div>
+        </div>
+    </div>
+    </div>
+    <!-- 填写EDA修改原因 Modal EDA管理员不显示该弹框 -->
+    <div id="remarkModel" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3 id="myModalLabel">请输入EDA修改原因
+            </h3>
+        </div>
+        <div class="modal-body">
+            <div class="form-box text-center">
+                <textarea name="reason" id="remark" style="width:100%" rows="3" placeholder="请输入EDA修改原因"></textarea>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-primary  submit-change">确定</button>
+            <button type="button" class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+        </div>
+    </div>
+</form>
+
+
+
+<!--上传 原理图符号文件 Modal -->
+<div id="uploadAdLibModal" class="modal hide fade uploadModal" tabindex="-1" role="dialog" aria-labelledby="uploadAdLibModal" aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3> 上传原理图符号文件
+        </h3>
+    </div>
+    <div class="modal-body">
+        <div>
+            <iframe class="uploadAdFootprintIframe" name="uploadAdFootprintIframe" style="display:none"></iframe>
+            <form action="/index/eda/uploadFileAction" class="uploadAdFootprintForm" method="post"
+                  enctype="multipart/form-data" target="uploadAdFootprintIframe">
+                <p></p>
+                <div class="upload-file-box ">
+                    <div class="postion-file">
+                        <input class="filename" type="file" name="file" />
+                        <input type="hidden" name="type" value="8" />
+                        <input type="hidden" name="component_pid" value="{$data.pid}" />
+                    </div>
+                    <button type="button" class="btn btn-info choose-file">选择文件</button><span class="file-name-text"></span>
+                </div>
+                <p></p>
+                <!-- <input type="hidden" name="type" value=""> -->
+                <div class="upload-submit-box">
+                    <input class="ant-btn ant-btn-primary upload-submit" type="submit" value="上传">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<!--封装库文件 Modal -->
+<div id="upLoadData9Modal" class="modal hide fade uploadModal" tabindex="-1" role="dialog" aria-labelledby="upLoadData9Modal" aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="ModalLabel">上传封装库文件
+        </h3>
+    </div>
+    <div class="modal-body">
+        <div>
+            <iframe class="upLoadData9Modal" name="upLoadData9Iframe" style="display:none"></iframe>
+            <form action="/index/eda/uploadFileAction" class="upLoadData9Form" method="post"
+                  enctype="multipart/form-data" target="upLoadData9Iframe">
+                <p></p>
+                <div class="upload-file-box ">
+                    <div class="postion-file">
+                        <input class="filename" type="file" name="file" />
+                        <input type="hidden" name="type" value="9" />
+                        <input type="hidden" name="component_pid" value="{$data.pid}" />
+                    </div>
+                    <button type="button" class="btn btn-info choose-file" style="display:none">选择文件</button><span class="file-name-text" style="display:none"></span>
+                </div>
+                <p></p>
+                <!-- <input type="hidden" name="type" value=""> -->
+                <div class="upload-submit-box">
+                    <input class="ant-btn ant-btn-primary upload-submit" type="submit" value="上传">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<style>
+    .uploadModal form {
+        margin: 20px auto;
+        border: 1px dashed #999;
+        width: 300px;
+        padding: 20px;
+    }
+    
+    .uploadModal form .text-info {
+        padding-bottom: 10px;
+    }
+    
+    .choose-file {
+        display: none;
+    }
+    
+    .modal .upload-submit {
+        margin-top: 20px;
+        width: 100px;
+    }
+</style>
+<script>
+    var UPLOAD_URL = "/index/eda/uploadFileAction"; // 文件提交地址 更据用户权限修改
+    var SUBMIT_EDIT_DATA_URL = '/index/eda/editAction'; // 数据提交地址，根据用户权限修改
+</script>
+<script src="/static/assets/js/Q.Uploader.file.all.js"></script>
+<script src="/static/assets/js/component_eda_edit.js">
+</script>
+<script>
+    // 判断文件类型
+    $(".filename").change(function() {
+        var target = this;
+        var fileSize = 0;
+        var filetypes = [".SchLib", ".PcbLib"];
+        var filepath = target.value;
+        var filemaxsize = 1024 * 2; //2M 
+        if (filepath) {
+            var isnext = false;
+            var fileend = filepath.substring(filepath.indexOf("."));
+            if (filetypes && filetypes.length > 0) {
+                for (var i = 0; i < filetypes.length; i++) {
+                    if (filetypes[i] == fileend) {
+                        isnext = true;
+                        break;
+                    }
+                }
+            }
+            if (!isnext) {
+                alert("不接受此文件类型！");
+                target.value = "";
+                return false;
+            }
+        } else {
+            return false;
+        }
+    })
+
+    // datasheet上传事件
+    $("#upload-ad-lib").click(function() {
+            $("#uploadAdLibModal").modal("show");
+            //$(".upload-file-box .filename").trigger("click")
+        })
+        // DataSheet 上传iframe 加载
+    $('.uploadAdFootprintIframe').on('load', function() {
+
+        try {
+            var responseText = $('.uploadAdFootprintIframe')[0].contentDocument.body.textContent || $('.uploadAdFootprintIframe')[0].contentWindow.document.documentElement.innerText;
+        } catch (error) {
+            var responseText = $('.uploadAdFootprintIframe')[0].contentWindow.document.documentElement.innerText;
+        }
+        $(this).parents(".modal").find(".file-name-text").text(responseText);
+        //  var responseText = $('.uploadDataSheetIframe')[0].contentDocument.body.textContent || $('.uploadDataSheetIframe')[0].contentWindow.document.body.textContent;
+        try {
+            var responseData = JSON.parse(responseText) || {};
+        } catch (error) {
+            var responseData = eval(responseText) || {};
+        }
+
+        layer.closeAll('loading');
+        var $Tr = $("#upload-ad-lib").parents("tr");
+        if (responseData.status != 1) {
+            $(this).parents(".modal").find(".file-name-text").text("上传失败" + responseData.data);
+            layer.msg(responseData.data)
+            return false;
+        }
+        var path = responseData.data.orig_name;
+
+        $Tr.addClass("active");
+        $("input[name=eda_lib_path]").val(path);
+        $(this).parents(".modal").find(".file-name-text").text("上传成功");
+        layer.msg("上传成功");
+        $("#uploadAdLibModal").modal("hide");
+        $Tr.find(".upload-state").text("文件上传成功")
+    });
+
+    $("#upload-ad-footprint").click(function() {
+            $("#upLoadData9Modal").modal("show");
+            //$(".upload-file-box .filename").trigger("click")
+        })
+        // 封装库文件 上传iframe 加载
+    $('.upLoadData9Modal').on('load', function() {
+        try {
+            var responseText = $('.upLoadData9Modal')[0].contentDocument.body.textContent || $('.upLoadData9Modal')[0].contentWindow.document.documentElement.innerText;
+        } catch (error) {
+            var responseText = $('.upLoadData9Modal')[0].contentWindow.document.documentElement.innerText;
+        }
+        try {
+            var responseData = JSON.parse(responseText) || {};
+        } catch (error) {
+            var responseData = eval(responseText) || {};
+        }
+        layer.closeAll('loading');
+        var $Tr = $("#upload-ad-footprint").parents("tr");
+        if (responseData.status != 1) {
+            $(this).parents(".modal").find(".file-name-text").text("上传失败" + responseData.data);
+            layer.msg(responseData.data)
+            return false;
+        }
+        var path = responseData.data.orig_name;
+        $Tr.addClass("active");
+        $("input[name=eda_footprint_path]").val(path);
+        $(this).parents(".modal").find(".file-name-text").text("上传成功");
+        layer.msg("上传成功");
+        $("#upLoadData9Modal").modal("hide");
+        $Tr.find(".upload-state").text("文件上传成功")
+    });
+</script>

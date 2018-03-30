@@ -1,0 +1,93 @@
+html,
+body {
+    background: #3b7bdc;
+}
+
+.AppView {
+    width: 100%;
+    padding-top: 60px;
+    position: relative;
+}
+
+.login {
+    width: 450px;
+    margin: 0 auto;
+    _position: absolute;
+    _left: 30%;
+    _margin_left: -225px;
+    height: auto;
+    background: #fff;
+    padding-bottom: 20px;
+}
+
+.login h2 {
+    color: #5a748d;
+    padding-top: 80px;
+    margin-bottom: 80px;
+}
+
+.login .control-group .control-label {
+    color: #999;
+    font-size: 16px;
+    line-height: 28px;
+    width: 120px;
+}
+
+.form-horizontal .controls {
+    margin-left: 0px;
+    float: left;
+}
+
+.login .control-group .controls input {
+    height: 30px;
+    width: 230px;
+    padding-left: 10px;
+    line-height: 30px;
+}
+
+.login .control-group {
+    width: 100%;
+}
+
+.login .submit-btn {
+    height: 46px;
+    line-height: 46px;
+    background: #3b7bdc;
+    width: 70%;
+    margin-top: 40px;
+    font-size: 22px;
+    color: #fff;
+    margin: 0 auto;
+    display: block;
+    padding: 0;
+    _margin-left: 80px;
+}
+
+.login .support {
+    color: #999;
+}
+
+.layui-layer-hui {
+    _position: absolute;
+    _top: 200px!important;
+    _left: 50%!important;
+    _margin-left: -80px;
+    _width: 160px;
+    +background: #000;
+}
+
+.layui-layer-hui {
+    +background: #000;
+    _background: #000;
+    +background: #000!important;
+    +filter: alpha(opacity=100);
+}
+
+.layui-layer-hui .layui-layer-content {
+    +background: #000;
+    _background: #000;
+}
+
+.layui-layer-dialog .layui-layer-content {
+    +color: #fff;
+}

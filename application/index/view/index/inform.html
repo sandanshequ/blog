@@ -1,0 +1,63 @@
+<!-- 通知页 -->
+
+<div class="page-container-box data-admin-page">
+    <div class="page-container">
+
+        <div class="admin-main-box">
+            <div class="data-tabel-top clearfix" style="margin-bottom: 16px;">
+                <span class="title">EDA库通知</span>
+                <p class="pull-right">
+                    <span>下载最新EDA库文件</span>
+                    <a href="/eda/eda.zip" target="_blank" class="ant-btn ant-btn-primary" style="margin-left: 10px;line-height:26px;" download="eda.zip">
+                                点击下载
+                    </a>
+                </p>
+            </div>
+            <div class="ant-table-wrapper">
+                <div class="ant-spin-nested-loading">
+                    <div class="ant-spin-container">
+                        <div class="ant-table ant-table-large ant-table-scroll-position-left">
+                            <div class="ant-table-content">
+                                <div class="ant-table-body">
+                                    <table class="">
+                                        <thead class="ant-table-thead">
+                                            <tr>
+                                                <th class="">
+                                                    <span><!-- react-text: 3449 -->EDA库通知<!-- /react-text --></span>
+                                                </th>
+                                                <th class="">
+                                                    <span><!-- react-text: 3452 -->时间<!-- /react-text --></span>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="ant-table-tbody">
+                                            {volist name='list' id='vo'}
+                                            <tr class="ant-table-row  ant-table-row-level-0">
+                                                <td class="">
+                                                    {$vo.name} 文件已更新
+                                                </td>
+                                                <td class="">
+                                                    {$vo.created_at}
+                                                </td>
+                                            </tr>
+                                            {/volist}
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="pagination-box">
+                                    {$list|raw}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    window.onload = function() {
+        // 进入通知页默认通知弹框已读
+        cissCommonHeader.getMsg(true);
+    }
+</script>

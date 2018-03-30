@@ -1,0 +1,324 @@
+<!-- 元器件列表页 -->
+<div class="search-screen-page">
+    <div class="component-detail-breadcrumbs">
+        <span class="component-detail-breadcrumbs-item">
+            <a href="/index/navigation/select">优选目录 </a>
+        </span>
+        <i class="iconfont icon-neiyexiangzuofanhuianniu01-copy"></i>
+        <span class="component-detail-breadcrumbs-item">
+            <a href="/index/navigation/select?id={$category.parent.id}">
+                {$category.parent.name}
+            </a>
+        </span>
+        <i class="iconfont icon-neiyexiangzuofanhuianniu01-copy"></i>
+        <span class="component-detail-breadcrumbs-item">
+            <a href="/index/navigation/select_list?category_id={$category.id}">
+                {$category.name}
+            </a>
+        </span>
+    </div>
+    <div class="screen-box">
+        <div class="result-nub clearfix">
+            <p class="nub pull-left">
+                符合条件的搜索结果：
+                <span class="orange">
+                    {$list.total}
+                </span> 项
+
+            </p>
+            <div class="result-search pull-right clearfix">
+                <div class="input-box pull-left">
+                    <form action="/index/navigation/select_list">
+                        <input type="hidden" name="category_id" value="{$category.id}">
+                        <input type="hidden" name="supply_status" value="2" />
+                        <input type="text" placeholder="在此分类中搜索" class="ant-input pull-left" name="key">
+                        <button type="submit" class="btn ant-btn ant-btn-primary pull-right">
+                            搜索
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="screen-condition clearfix">
+            <!--TODO: 筛选条件-->
+            <div class="s-c-left pull-left">筛选条件:</div>
+            <div class="s-c-right clearfix pull-left">
+                <form action="/index/navigation/select_list" class="component-filter">
+                    <div class="screen-box clearfix">
+                        <input type="hidden" name="supply_status" value="2" />
+                        <input type="hidden" name="category_id" value="{$category.id}" />
+                        <input type="hidden" name="column" value="{$Request.get.column}" />
+                        <input type="hidden" name="key" value="{$Request.get.key}" />
+                        <div class="ciss-dropdown pull-left" style="display: block;">
+                            <label for="">封装形式:</label>
+                            <select name="package" id="package">
+                                <option value="">未选择</option>
+                                {volist name="$filters.exact_package" id="vo"}
+                                {notempty name="$vo['key']"}
+                                <option value="{$vo.key}">{$vo.key} ({$vo.doc_count})</option>
+                                {/notempty}
+                                {/volist}
+                            </select>
+                        </div>
+                        <div class="ciss-dropdown pull-left" style="display: block;">
+                            <label for="">质量等级：</label>
+                            <select name="quality" id="quality">
+                                <option value="">未选择</option>
+                                {volist name="$filters.exact_quality" id="vo"}
+                                {notempty name="$vo['key']"}
+                                <option value="{$vo.key}">{$vo.key} ({$vo.doc_count})</option>
+                                {/notempty}
+                                {/volist}
+                            </select>
+                        </div>
+                        <div class="ciss-dropdown pull-left" style="display: block;">
+                            <label for="">生产厂商：</label>
+                            <select name="manufacturer_id" id="manufacturer_id">
+                                <option value="">未选择</option>
+                                {volist name="$filters.manufacturer_id" id="vo"}
+                                {notempty name="$vo['key']"}
+                                <option value="{$vo.key}">{$vo.name} ({$vo.doc_count})</option>
+                                {/notempty}
+                                {/volist}
+                            </select>
+                        </div>
+                        <div class="ciss-dropdown pull-left" style="display: block;">
+                            <label for="">温度范围：</label>
+                            <select name="temperature" id="temperature">
+                                <option value="">未选择</option>
+                                {volist name="$filters.temperature" id="vo"}
+                                {notempty name="$vo['low']"}
+
+                                <option value="{$vo.low|trim},{$vo.high|trim}">
+                                    {$vo.low}℃ ~ {$vo.high}℃ ({$vo.doc_count})
+                                </option>
+                                {/notempty}
+                                {/volist}
+                            </select>
+                        </div>
+                        <div class="screen-more">
+                            <button type="button" class="btn ant-btn ant-btn-primary pull-left showMoreFilter">更多筛选</button>
+                            <button type="buttpn" class="btn ant-btn ant-btn-default pull-left resetFilter">重置</button>
+                        </div>
+                    </div>
+                    <div class="screen-box clearfix more-filer-box hide">
+                        {volist name="@$filters.extend_param" id="vo"}
+                        <div class="ciss-dropdown pull-left" style="display: block;">
+                            <label for="">{$vo.name}</label>
+                            <select name="{$vo.id}">
+                                <option value="">未选择</option>
+                                {volist name="$vo.values" id="vo"}
+                                {notempty name="$vo['key']"}
+                                <option value="{$vo.key}">{$vo.key} ({$vo.doc_count})</option>
+                                {/notempty}
+                                {/volist}
+                            </select>
+                        </div>
+                        {/volist}
+
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="user-choose-screen clearfix"><span class="s-c-left pull-left" style="line-height: 35px;">筛选应用：</span>
+            <div class="s-c-right clearfix pull-left">
+
+            </div>
+        </div>
+    </div>
+    <div class="component-detail-tabs">
+        {volist name="list.data" id='vo'}
+        <div class="component-detail-item clearfix ciss-product-item">
+            <div class="c-i-left pull-left">
+                <div class="img-box">
+                    {if empty($vo['components_picture'])}
+                    <img src="/static/assets/img/no_photo.png" alt=""> {else/}
+                    <img src="/{$vo['components_picture']}" alt=""> {/if}
+                </div>
+            </div>
+            <div class="c-i-right pull-left s-i-right">
+                <div class="clearfix">
+                    <h2 class="name">
+                        <a href="/index/component/detail?sn={$vo.serial_no}">
+                            {$vo.specification_model_no}
+                        </a>
+                    </h2>
+                    <p class="type">
+                        <span class="type-tag">优选</span>
+                    </p>
+                    <p class="info-list clearfix pull-left">
+                        <i class="item-title pull-left">
+                            物资编码 :
+                        </i>
+                        <span class="item-info pull-left">{$vo.serial_no}</span>
+                    </p>
+                    <p class="info-list clearfix pull-left">
+                        <i class="item-title pull-left">
+                            生产控制质量等级 :
+                        </i>
+                        <span class="item-info pull-left">
+                            {$vo.quality|default='无'}
+                        </span>
+                    </p>
+                    <p class="info-list clearfix pull-left">
+                        <i class="item-title pull-left">
+                            可靠性预计质量等级 :
+                        </i>
+                        <span class="item-info pull-left">
+                            {$vo.reliability_quality|default='无'}
+                        </span>
+                    </p>
+                    <p class="info-list clearfix pull-left">
+                        <i class="item-title pull-left">工作温度范围 : </i>
+                        <span class="item-info pull-left">
+                            {$vo.temperature_low|default='--'}℃
+                            ~
+                            {$vo.temperature_high|default='--'}℃
+                        </span>
+                    </p>
+                    <p class="info-list clearfix pull-left">
+                        <i class="item-title pull-left">
+                            封装形式 :
+                        </i>
+                        <span class="item-info pull-left">
+                            {$vo.package|default='无'}
+                        </span>
+                    </p>
+                    <p class="info-list clearfix pull-left">
+                        <i class="item-title pull-left">
+                            生产厂家 :
+                        </i>
+                        <span class="item-info pull-left">
+                            {$vo.manufacturer_name|default='无'}
+                        </span>
+                    </p>
+                </div>
+            </div>
+            <div class="product-order">
+                <!--是否有datasheet-->
+                {if empty($vo['datasheet_path'])} {else/}
+                <div class="btn-box">
+                    <a target="_blank" href="/{$vo['datasheet_path']}" download="datasheet" class="ant-btn ant-btn-primary" style="background:rgb(17, 145, 231);width: 90px; color: rgb(255, 255, 255); text-align: center; padding-right: 0px;padding-left:0;line-height:26px;">
+                                    数据手册下载
+                        </a>
+                </div>
+                {/if}
+                <!--是否有执行标准-->
+                {if empty($vo['executive_standard'])} {else/}
+                <div class="btn-box">
+                    <a target="_blank" href="/{$vo['executive_standard']}" download="executive" class="ant-btn ant-btn-default" style="background:#fff;width: 90px; color: rgb(17, 145, 231); text-align: center; padding-right: 0px;padding-left:0;line-height:26px;">
+                                执行标准下载
+                        </a>
+                </div>
+                {/if}
+            </div>
+        </div>
+        {/volist}
+    </div>
+    <div class="pagination-box">
+        {$page|raw}
+    </div>
+</div>
+
+
+<script>
+    var componentSelectListPage = {
+        init: function() {
+            this.selectChange();
+            this.initFilter();
+            this.showMoreFilterClick();
+            this.resetFilterClick();
+        },
+        selectChange: function() {
+            $("select").change(function() {
+                var $input = $(".component-filter input");
+                var $select = $(".component-filter select");
+                for (var i = 0; i < $input.length; i++) {
+                    if ($input[i].value == "") {
+                        $($input[i]).attr("disabled", true);
+                    }
+                }
+                for (var i = 0; i < $select.length; i++) {
+                    if ($select[i].value == "") {
+                        $($select[i]).attr("disabled", true)
+                    }
+                }
+                $(".component-filter").submit()
+            })
+        },
+        initFilter: function() {
+            // 1 是否有更多筛选菜单
+            if ($(".more-filer-box .ciss-dropdown").length < 1) {
+                $(".showMoreFilter").hide();
+            }
+            // 2 筛选状态注入选择
+            var $select = $(".component-filter select");
+            var ifShowMoreFilter = false;
+            for (var i = 0; i < $select.length; i++) {
+                var name = $($select[i]).attr("name");
+                //  console.log($($select[i])[0].options.length);
+                var val = cissCommon.getUrlParam(name);
+                if (val) {
+                    $select[i].value = val;
+                    var text = $($select[i]).find("option:selected").text();
+                    var html = '<p class="screen-item"  data-name="' + name + '" data-searchkey="manufacturer_id">' + text +
+                        ' <i> X</i>' +
+                        '</p>'
+                    $(html).appendTo($(".user-choose-screen .s-c-right"));
+                    if (name.match("param")) {
+                        ifShowMoreFilter = true;
+                    }
+
+                }
+            }
+            if (ifShowMoreFilter) {
+                $(".more-filer-box").show(100);
+                $(".showMoreFilter").text("收起")
+            }
+            $(".screen-item").click(function() {
+                var name = $(this).attr("data-name");
+                $("select[name='" + name + "']").val("");
+                var $input = $(".component-filter input ");
+                var $select = $(".component-filter select ");
+                for (var i = 0; i < $input.length; i++) {
+                    if ($input[i].value == "") {
+                        $($input[i]).attr("disabled", true);
+                    }
+                }
+                for (var i = 0; i < $select.length; i++) {
+                    if ($select[i].value == "") {
+                        $($select[i]).attr("disabled", true)
+                    }
+                }
+                $(".component-filter").submit();
+            })
+        },
+        showMoreFilterClick: function() {
+            $(".showMoreFilter").click(function() {
+                var $this = $(this);
+                if ($this.text() == "更多筛选") {
+                    $(".more-filer-box").show(100);
+                    $this.text("收起")
+                } else {
+                    $(".more-filer-box").hide(100);
+                    $this.text("更多筛选")
+                }
+
+            })
+        },
+        resetFilterClick: function() {
+            $(".resetFilter").click(function() {
+                var $select = $(".component-filter select");
+                for (var i = 0; i < $select.length; i++) {
+                    $select[i].value == ""
+                    $($select[i]).attr("disabled", true)
+                }
+                $(".component-filter ").submit()
+            })
+        }
+
+    }
+    $(function() {
+        componentSelectListPage.init();
+    })
+</script>

@@ -1,0 +1,627 @@
+<!-- 元器件数据修改申请页 -->
+<div class="classify-page">
+    <div class="component-detail-breadcrumbs">
+        <span class="component-detail-breadcrumbs-item">
+                    <a href="/index/navigaion">分类导航 </a>
+                </span>
+        <i class="iconfont">&gt;</i>
+        <span class="component-detail-breadcrumbs-item">
+                    <a href="/index/navigation/index?id={$data.category.parent.id}">
+                        {$data.category.parent.name}
+                    </a></span>
+        <i class="iconfont">&gt;</i>
+        <span class="component-detail-breadcrumbs-item">
+                    <a href="/index/navigation/list?category_id={$data.category.id}">
+                        {$data.category.name}
+                    </a>
+                </span>
+        <i class="iconfont">&gt;</i>
+        <span class="component-detail-breadcrumbs-item">
+                    {$data.specification_model_no|default='--'}
+                </span>
+    </div>
+    <div>
+        <form action="" class="submit-component-data">
+            <!-- 隐藏提交元素 -->
+            <input type="hidden" name="id" value="{$data.serial_no}" />
+            <input type="hidden" name="pid" value="{$data.pid}" />
+            <input type="hidden" name="category_id" value="{$data.category.id}" />
+            <div class="component-detail-tabs">
+
+                <div style="height: auto; overflow: auto;">
+                    <div>
+                        <table>
+
+                        </table>
+                    </div>
+                    <div style="height: inherit; overflow-x: hidden; overflow-y: auto;">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>数据</th>
+                                    <th>内容</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody style="height: inherit;">
+                                <tr>
+                                    <td>产品图片<span class="red">(图片上传类型为.jpg,.png,.jpeg,.gif)</span></td>
+                                    <td>
+                                        {if empty($data['files'][4])}
+                                        <img src="/static/assets/img/no_photo.png" alt="{$data.name}" />
+                                        <input type="hidden" name="components_picture" value="" /> {else/}
+                                        <img src="/{$data['files'][4]['path']}" alt="{$data.name}" />
+                                        <input type="hidden" name="components_picture" value="{$data['files'][4]['path']}" /> {/if}
+                                    </td>
+                                    <td>
+                                        <button type="button" class="btn ant-btn" id="upload-img" data-type="4" data-img="1" data-msg="产品图片" data-name="components_picture">
+                                        替换
+                                    </button>
+                                        <p class="upload-img"></p>
+                                        <!-- <a class="btn ant-btn" href="#UploadModal" role="button" data-toggle="modal">替换</a> -->
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>物资编码</td>
+                                    <td>
+                                        {$data.serial_no}
+                                        <input type="hidden" name="" value="{$data.serial_no}">
+                                    </td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>型号规格</td>
+                                    <td>
+                                        <input type="text" name="specification_model_no" class="ant-input edit-input-text" value="{$data.specification_model_no}">
+                                    </td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>生产厂家</td>
+                                    <td>
+                                        <!-- <div class="autocomplete-box">
+                        <input type="text" class="ant-input edit-input-text manufacturer-input" value="EP2C20F256I8N">
+                        <select name="" class="autocomplete-select" id="">
+                        </select>
+                    </div> -->
+                                        <span class="manufacturerName">{$data.manufacturer.name|default='--'}</span>
+                                        <input type="hidden" name="manufacturer_name" value="{$data.manufacturer.name|default='--'}">
+                                        <input type="hidden" name="manufacturer_id" value="{$data.manufacturer.id}">
+
+                                    </td>
+                                    <td>
+                                        <a class="btn ant-btn showManufacturerModal" href="#myModal" role="button">修改</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>国产/进口
+                                    </td>
+
+                                    <td>
+                                        <label for="" class="radio inline">
+                                        {eq name="data.origin" value="国产"}
+                                        <input type="radio"  class="ciss-radio" name="origin" value="国产" checked>国产
+                                        {else/}
+                                        <input type="radio"  class="ciss-radio" name="origin" value="国产">国产
+
+                                        {/eq}
+                                    </label>
+                                        <label for="" class="radio inline">
+                                        {eq name="data.origin" value="进口"}
+                                        <input type="radio"  class="ciss-radio" name="origin" value="进口" checked>进口
+                                        {else/}
+                                        <input type="radio"  class="ciss-radio" name="origin" value="进口">进口
+                                        {/eq}
+                                    </label>
+                                    </td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>供货状态</td>
+                                    <td>
+                                        {eq name="role" value="admin"}
+                                        <label for="" class="radio inline">
+                                        {eq name="data.supply_status" value="1"}
+                                        <input type="radio"  class="ciss-radio" name="supply_status" value="1" checked>可用
+                                        {else/}
+                                        <input type="radio"  class="ciss-radio" name="supply_status" value="1">可用
+                                        {/eq}
+                                    </label>
+                                        <label for="" class="radio inline">
+                                        {eq name="data.supply_status" value="2"}
+                                        <input type="radio"  class="ciss-radio" name="supply_status" value="2" checked>优选
+                                        {else/}
+                                        <input type="radio"  class="ciss-radio" name="supply_status" value="2">优选
+                                        {/eq}
+
+                                    </label>
+                                        <label for="" class="radio inline">
+                                        {eq name="data.supply_status" value="3"}
+                                        <input type="radio"  class="ciss-radio" name="supply_status" value="3" checked>推荐
+                                        {else/}
+                                        <input type="radio"  class="ciss-radio" name="supply_status" value="3">推荐
+                                        {/eq}
+
+                                    </label>
+                                        <label for="" class="radio inline">
+                                        {eq name="data.supply_status" value="4"}
+                                        <input type="radio"  class="ciss-radio" name="supply_status" value="4" checked>限用
+                                        {else/}
+                                        <input type="radio"  class="ciss-radio" name="supply_status" value="4">限用
+                                        {/eq}
+                                    </label> {else/}
+
+                                        <input type="hidden" name="supply_status" value="{$data.supply_status}"> {switch name="data.supply_status"} {case 1}可用{/case} {case 2}优选{/case} {case 3}推荐{/case} {case 4}限用{/case} {/switch} {/eq}
+                                    </td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>生产控制质量等级</td>
+                                    <td><input type="text" name="quality" class="ant-input edit-input-text" value="{$data.quality}"></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>可靠性预计质量等级</td>
+                                    <td><input type="text" name="reliability_quality" class="ant-input edit-input-text" value="{$data.reliability_quality}"></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>封装形式</td>
+                                    <td><input type="text" name="package" class="ant-input edit-input-text" value="{$data.package}">
+                                    </td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>名称</td>
+                                    <td><input type="text" name="name" class="ant-input edit-input-text" value="{$data.name}">
+                                    </td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>温度范围</td>
+                                    <td><input type="text" name="temperature_low" class="ant-input edit-input-text-s" value="{$data.temperature_low}"> ℃~
+                                        <input type="text" name="temperature_high" class="ant-input edit-input-text-s" value="{$data.temperature_high}"> ℃
+                                    </td>
+                                    <td></td>
+                                </tr>
+                                <!--参数-->
+                                {volist name="data.params" id="vo"}
+                                <tr>
+                                    <td>{$vo.name}</td>
+                                    <td><input type="text" class="ant-input edit-input-text" name="param_{$key}" value="{$vo.param_value}"></td>
+                                    <td></td>
+                                </tr>
+                                {/volist}
+                                <tr>
+                                    <td>数据手册<span class="red">(文件上传类型为.pdf)</span></td>
+                                    <td>
+                                        <p class="view-box">
+                                            {empty name="data.files.1"} 无 {else/}
+                                            <a href="/{$data.files.1.path}" target="_block">预览</a> {/empty}
+                                        </p>
+                                        <input type="hidden" name="datasheet_path" value="{$data.files.1.path|default=''}">
+                                    </td>
+                                    <td>
+                                        <button type="button" class="btn ant-btn" id="upload-datasheet" data-type="1" data-msg="数据手册" data-name="datasheet_path">替换
+                                    </button>
+                                        <p class="upload-datasheet"></p>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>执行标准<span class="red">(文件上传类型为.pdf)</span></td>
+                                    <td>
+
+                                        <p class="view-box">
+                                            {empty name="data.files.6"} 无 {else/}
+                                            <a href="/{$data.files.6.path}" target="_block">预览</a> {/empty}
+                                        </p>
+                                        <input type="hidden" name="executive_standard" value="{$data.files.6.path|default=''}">
+
+                                    </td>
+                                    <td>
+                                        <button type="button" class="btn ant-btn" id="upload-executive" data-type="6" data-msg="执行标准" data-name="executive_standard">替换
+                                    </button>
+                                        <p class="upload-executive-state"></p>
+                                        <!-- <a class="btn ant-btn" href="#UploadModal" role="button" data-toggle="modal">替换</a> -->
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>外形尺寸图<span class="red">(文件上传类型为.pdf)</span></td>
+                                    <td>
+                                        <p class="view-box">
+                                            {empty name="data.files.7"} 无 {else/}
+                                            <a href="/{$data.files.7.path}" target="_block">预览</a> {/empty}
+                                        </p>
+                                        <input type="hidden" name="dimension_picture" value="{$data.files.7.path|default=''}">
+                                    </td>
+                                    <td>
+                                        <button type="button" class="btn ant-btn" id="upload-dimension" data-type="7" data-msg="外形尺寸图" data-name="dimension_picture">替换
+                                    </button>
+                                        <p class="upload-dimension-state"></p>
+                                        <!-- <a class="btn ant-btn" href="#UploadModal" role="button" data-toggle="modal">替换</a> -->
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="edit-btn-box" style="text-align: center; margin: 10px 0px;">
+                <button type="submit" class="ant-btn ant-btn-primary submit-change" style="width: 130px; height: 40px; margin-right: 30px; background-color: rgb(59, 123, 220);">
+                    <span>
+                        {eq name="role" value="admin"}
+                        修改
+                        {else/}
+                        申请修改
+                        {/eq}
+                    </span>
+
+                </button>
+                <button type="button" onClick="cissCommon.goBack()" class=" ant-btn ant-btn-primary " style="width: 130px; height: 40px; margin-right: 10px; background-color: rgb(248, 248, 248); color: rgb(59, 123, 220); ">
+                    <span>取 消</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+<!--生产厂商选择弹框 Modal -->
+<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="myModalLabel">生产厂商修改
+            <small>请选择生产厂家</small>
+        </h3>
+    </div>
+    <div class="modal-body">
+        <div class="autocomplet-box text-center">
+            <input type="text" class="manufacturer-modal-input">
+            <div class="autocomplet-list text-left">
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+        <button class="btn btn-primary">确定</button>
+    </div>
+</div>
+
+
+<!--上传图片n弹框 Modal -->
+<div id="upLoadImgModal" class="modal hide fade uploadModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="ModalLabel">上传产品图片
+        </h3>
+    </div>
+    <div class="modal-body">
+        <div>
+            <iframe class="uploadImgIframe" name="uploadImgIframe" style="display:none;"></iframe>
+            <form action="/index/component/uploadFileAction" class="uploadImgForm" method="post" enctype="multipart/form-data" target="uploadImgIframe">
+                <p></p>
+                <div class="upload-file-box ">
+                    <div class="postion-file">
+                        <input class="filename" data-type="img" type="file" name="file" />
+                        <input type="hidden" name="type" value="4" />
+                        <input type="hidden" name="component_pid" value="{$data.pid}" />
+                    </div>
+                    <button type="button" class="btn btn-info choose-file">选择文件</button><span class="file-name-text"></span>
+                </div>
+                <p></p>
+                <!-- <input type="hidden" name="type" value=""> -->
+                <div class="upload-submit-box">
+                    <input class="ant-btn ant-btn-primary upload-submit" type="submit" value="上传">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!--上传数据手册 Modal -->
+<div id="uploadDatasheetModal" class="modal hide fade uploadModal" tabindex="-1" role="dialog" aria-labelledby="uploadDatasheetModal" aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="ModalLabel">上传数据手册
+        </h3>
+    </div>
+    <div class="modal-body">
+        <div>
+            <iframe class="uploadDataSheetIframe" name="uploadDataSheetIframe" style="display:none"></iframe>
+            <form action="/index/component/uploadFileAction" class="uploadDataSheetIframe" method="post" enctype="multipart/form-data" target="uploadDataSheetIframe">
+                <p></p>
+                <div class="upload-file-box ">
+                    <div class="postion-file">
+                        <input class="filename" data-type="pdf" type="file" name="file" />
+                        <input type="hidden" name="type" value="1" />
+                        <input type="hidden" name="component_pid" value="{$data.pid}" />
+                    </div>
+                    <button type="button" class="btn btn-info choose-file">选择文件</button><span class="file-name-text"></span>
+                </div>
+                <p></p>
+                <!-- <input type="hidden" name="type" value=""> -->
+                <div class="upload-submit-box">
+                    <input class="ant-btn ant-btn-primary upload-submit" type="submit" value="上传">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<!--上传执行标准 Modal -->
+<div id="upLoadData6Modal" class="modal hide fade uploadModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="ModalLabel">上传执行标准
+        </h3>
+    </div>
+    <div class="modal-body">
+        <div>
+            <iframe class="upLoadData6Iframe" name="upLoadData6Iframe" style="display:none"></iframe>
+            <form action="/index/component/uploadFileAction" class="upLoadData6Form" method="post" enctype="multipart/form-data" target="upLoadData6Iframe">
+                <p></p>
+                <div class="upload-file-box ">
+                    <div class="postion-file">
+                        <input class="filename" data-type="pdf" type="file" name="file" />
+                        <input type="hidden" name="type" value="6" />
+                        <input type="hidden" name="component_pid" value="{$data.pid}" />
+                    </div>
+                    <button type="button" class="btn btn-info choose-file" style="display:none">选择文件</button><span class="file-name-text" style="display:none"></span>
+                </div>
+                <p></p>
+                <!-- <input type="hidden" name="type" value=""> -->
+                <div class="upload-submit-box">
+                    <input class="ant-btn ant-btn-primary upload-submit" type="submit" value="上传">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<!--上传外形尺寸图 Modal -->
+<div id="upLoadData7Modal" class="modal hide fade uploadModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="ModalLabel">上传外形尺寸图
+        </h3>
+    </div>
+    <div class="modal-body">
+        <div>
+            <iframe class="upLoadData7iframe" name="upLoadData7iframe" style="display:none"></iframe>
+            <form action="/index/component/uploadFileAction" class="upLoadData7Form" method="post" enctype="multipart/form-data" target="upLoadData7iframe">
+                <p></p>
+                <div class="upload-file-box ">
+                    <div class="postion-file">
+                        <input class="filename" data-type="pdf" type="file" name="file" />
+                        <input type="hidden" name="type" value="7" />
+                        <input type="hidden" name="component_pid" value="{$data.pid}" />
+                    </div>
+                    <button type="button" class="btn btn-info choose-file">选择文件</button><span class="file-name-text"></span>
+                </div>
+                <p></p>
+                <!-- <input type="hidden" name="type" value=""> -->
+                <div class="upload-submit-box">
+                    <input class="ant-btn ant-btn-primary upload-submit" type="submit" value="上传">
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
+<style>
+    .uploadModal form {
+        margin: 20px auto;
+        border: 1px dashed #999;
+        width: 300px;
+        padding: 20px;
+    }
+    
+    .uploadModal form .text-info {
+        padding-bottom: 10px;
+    }
+    
+    .choose-file {
+        display: none;
+    }
+    
+    .modal .upload-submit {
+        margin-top: 20px;
+        width: 100px;
+    }
+</style>
+<script>
+    var UPLOAD_URL = "/index/component/uploadFileAction "; // 文件提交地址 更据用户权限修改
+    var SUBMIT_EDIT_DATA_URL = '/index/component/editAction'; // 数据提交地址，根据用户权限修改
+</script>
+<script src="/static/assets/js/Q.Uploader.file.all.js "></script>
+<script src="/static/assets/js/component_edit.js ">
+</script>
+<script>
+    $(".filename").change(function() {
+            var target = this;
+            var fileSize = 0;
+            var dataType = $(this).attr("data-type");
+            if (dataType == "img") {
+                var filetypes = [".jpg", ".png", ".jpeg", ".gif"];
+            } else {
+                var filetypes = [".pdf"];
+            }
+
+            var filepath = target.value;
+            var filemaxsize = 1024 * 2; //2M 
+            if (filepath) {
+                var isnext = false;
+                var fileend = filepath.substring(filepath.indexOf("."));
+                if (filetypes && filetypes.length > 0) {
+                    for (var i = 0; i < filetypes.length; i++) {
+                        if (filetypes[i] == fileend) {
+                            isnext = true;
+                            break;
+                        }
+                    }
+                }
+                if (!isnext) {
+                    alert("不接受此文件类型！");
+                    target.value = "";
+                    return false;
+                }
+            } else {
+                return false;
+            }
+        })
+        // 图片上传点击事件
+    $("#upload-img").click(function() {
+            $("#upLoadImgModal").modal("show");
+            //$(".upload-file-box .filename").trigger("click")
+        })
+        // 图片上传iframe 加载
+    $('.uploadImgIframe').on('load', function() {
+        // var responseText = $('.uploadImgIframe')[0].contentDocument.body.textContent || $('.uploadImgIframe')[0].contentWindow.document.body.textContent;
+        try {
+            var responseText = $('.uploadImgIframe')[0].contentDocument.body.textContent || $('.uploadImgIframe')[0].contentWindow.document.documentElement.innerText;
+        } catch (error) {
+            var responseText = $('.uploadImgIframe')[0].contentWindow.document.documentElement.innerText;
+        }
+
+        $(this).parents(".modal").find(".file-name-text").text(responseText);
+        try {
+            var responseData = JSON.parse(responseText) || {};
+        } catch (error) {
+            var responseData = eval(responseText) || {};
+        }
+        layer.closeAll('loading');
+        var $Tr = $("#upload-img").parents("tr");
+        if (responseData.status != 1) {
+            layer.msg(responseData.data);
+            $(this).parents(".modal").find(".file-name-text").text("上传失败" + responseData.data);
+            return false;
+        }
+        var path = responseData.data.file_path;
+        $Tr.find("img").attr("src", "/" + path);
+        $Tr.addClass("active");
+        $("input[name=components_picture]").val(path);
+        $(this).parents(".modal").find(".file-name-text").text("上传成功");
+        layer.msg("上传成功");
+        $("#upLoadImgModal").modal("hide");
+    });
+
+    // datasheet上传事件
+    $("#upload-datasheet").click(function() {
+            $("#uploadDatasheetModal").modal("show");
+            //$(".upload-file-box .filename").trigger("click")
+        })
+        // DataSheet 上传iframe 加载
+    $('.uploadDataSheetIframe').on('load', function() {
+
+        try {
+            var responseText = $('.uploadDataSheetIframe')[0].contentDocument.body.textContent || $('.uploadDataSheetIframe')[0].contentWindow.document.documentElement.innerText;
+        } catch (error) {
+            var responseText = $('.uploadDataSheetIframe')[0].contentWindow.document.documentElement.innerText;
+        }
+        $(this).parents(".modal").find(".file-name-text").text(responseText);
+        //  var responseText = $('.uploadDataSheetIframe')[0].contentDocument.body.textContent || $('.uploadDataSheetIframe')[0].contentWindow.document.body.textContent;
+        try {
+            var responseData = JSON.parse(responseText) || {};
+        } catch (error) {
+            var responseData = eval(responseText) || {};
+        }
+
+        layer.closeAll('loading');
+        var $Tr = $("#upload-datasheet").parents("tr");
+        if (responseData.status != 1) {
+            $(this).parents(".modal").find(".file-name-text").text("上传失败" + responseData.data);
+            layer.msg(responseData.data)
+            return false;
+        }
+        var path = responseData.data.file_path;
+        if ($Tr.find(".view-box a").length >= 1) {
+            $Tr.find(".view-box a").attr("href", "/" + path);
+        } else {
+            var html = "<a target='_block' href='/" + path + "'>预览</a>"
+            $Tr.find(".view-box").html(html);
+        }
+        $Tr.addClass("active");
+        $("input[name=datasheet_path]").val(path);
+        $(this).parents(".modal").find(".file-name-text").text("上传成功");
+        layer.msg("上传成功");
+        $("#uploadDatasheetModal").modal("hide");
+    });
+
+
+
+    $("#upload-executive").click(function() {
+            $("#upLoadData6Modal").modal("show");
+            //$(".upload-file-box .filename").trigger("click")
+        })
+        // 执行标准 上传iframe 加载
+    $('.upLoadData6Iframe').on('load', function() {
+        try {
+            var responseText = $('.upLoadData6Iframe')[0].contentDocument.body.textContent || $('.upLoadData6Iframe')[0].contentWindow.document.documentElement.innerText;
+        } catch (error) {
+            var responseText = $('.upLoadData6Iframe')[0].contentWindow.document.documentElement.innerText;
+        }
+        try {
+            var responseData = JSON.parse(responseText) || {};
+        } catch (error) {
+            var responseData = eval(responseText) || {};
+        }
+        layer.closeAll('loading');
+        var $Tr = $("#upload-executive").parents("tr");
+        if (responseData.status != 1) {
+            $(this).parents(".modal").find(".file-name-text").text("上传失败" + responseData.data);
+            layer.msg(responseData.data)
+            return false;
+        }
+        var path = responseData.data.file_path;
+        if ($Tr.find(".view-box a").length >= 1) {
+            $Tr.find(".view-box a").attr("href", "/" + path);
+        } else {
+            var html = "<a target='_block' href='/" + path + "'>预览</a>"
+            $Tr.find(".view-box").html(html);
+        }
+        $Tr.addClass("active");
+        $("input[name=executive_standard]").val(path);
+        $(this).parents(".modal").find(".file-name-text").text("上传成功");
+        layer.msg("上传成功");
+        $("#upLoadData6Modal").modal("hide");
+    });
+
+
+    $("#upload-dimension").click(function() {
+            $("#upLoadData7Modal").modal("show");
+            //$(".upload-file-box .filename").trigger("click")
+        })
+        // 外形尺寸图 上传iframe 加载
+    $('.upLoadData7iframe').on('load', function() {
+        try {
+            var responseText = $('.upLoadData7iframe')[0].contentDocument.body.textContent || $('.upLoadData7iframe')[0].contentWindow.document.documentElement.innerText;
+        } catch (error) {
+            var responseText = $('.upLoadData7iframe')[0].contentWindow.document.documentElement.innerText;
+        }
+        //var responseText = $('.upLoadData7iframe')[0].contentDocument.body.textContent || $('.upLoadData7iframe')[0].contentWindow.document.body.textContent;
+        try {
+            var responseData = JSON.parse(responseText) || {};
+        } catch (error) {
+            var responseData = eval(responseText) || {};
+        }
+        layer.closeAll('loading');
+        var $Tr = $("#upload-dimension").parents("tr");
+        if (responseData.status != 1) {
+            $(this).parents(".modal").find(".file-name-text").text("上传失败" + responseData.data);
+            layer.msg(responseData.data)
+            return false;
+        }
+        var path = responseData.data.file_path;
+        if ($Tr.find(".view-box a").length >= 1) {
+            $Tr.find(".view-box a").attr("href", "/" + path);
+        } else {
+            var html = "<a target='_block' href='/" + path + "'>预览</a>"
+            $Tr.find(".view-box").html(html);
+        }
+        $Tr.addClass("active");
+        $("input[name=dimension_picture]").val(path);
+        $(this).parents(".modal").find(".file-name-text").text("上传成功");
+        layer.msg("上传成功");
+        $("#upLoadData7Modal").modal("hide");
+    });
+</script>
